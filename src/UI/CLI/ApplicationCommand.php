@@ -6,6 +6,7 @@ use Liuggio\Fastest\CommandLine;
 use Liuggio\Fastest\Consumer\ConsumerListener;
 use Liuggio\Fastest\Event\EventsName;
 use Liuggio\Fastest\ProcessorCounter;
+use Liuggio\Fastest\Producer\PhpUnitProducer;
 use Liuggio\Fastest\Producer\StdInProducer;
 use Liuggio\Fastest\Queue\EventDispatcherQueue;
 use Liuggio\Fastest\Supervisor;
@@ -74,7 +75,6 @@ class ApplicationCommand extends Command
         $stopWatch = new Stopwatch();
         $stopWatch->start('create');
         // init
-        $inputProducer = new StdInProducer();
         $eventDispatcher = new EventDispatcher();
 
         // arguments and options
@@ -93,8 +93,12 @@ class ApplicationCommand extends Command
             $queue = $queue->randomize();
         }
 
-        // start
-        $inputProducer->produce($queue);
+        // InputLine Producers
+        $producer = new StdInProducer();
+        if ($input->getOption('xml')) {
+            $producer = new PhpUnitProducer($input->getOption('xml'));
+        }
+        $producer->produce($queue);
 
         return $supervisor->loop();
     }
