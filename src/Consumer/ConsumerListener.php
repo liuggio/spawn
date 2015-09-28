@@ -1,13 +1,12 @@
 <?php
 
-namespace Liuggio\Fastest\Consumer;
+namespace Liuggio\Concurrent\Consumer;
 
-use Liuggio\Fastest\CommandLine;
-use Liuggio\Fastest\Event\EventsName;
-use Liuggio\Fastest\Event\ProcessStartedEvent;
-use Liuggio\Fastest\Event\ChannelIsWaitingEvent;
-use Liuggio\Fastest\Process\CreateAndStartAProcess;
-use Liuggio\Fastest\Queue\QueueInterface;
+use Liuggio\Concurrent\Event\EventsName;
+use Liuggio\Concurrent\Event\ProcessStartedEvent;
+use Liuggio\Concurrent\Event\ChannelIsWaitingEvent;
+use Liuggio\Concurrent\Process\ProcessFactoryInterface;
+use Liuggio\Concurrent\Queue\QueueInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ConsumerListener
@@ -16,24 +15,28 @@ class ConsumerListener
     private $processCounter;
     /** @var QueueInterface */
     private $queue;
-    /** @var CreateAndStartAProcess */
-    private $createAndStartAProcess;
-    /** @var CommandLine */
-    private $baseCommandLine;
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
+    /** @var ProcessFactoryInterface */
+    private $processFactory;
+    /** @var string */
+    private $cwd;
+    /** @var string */
+    private $template;
 
     public function __construct(
         QueueInterface $queue,
-        CommandLine $baseCommandLine,
         EventDispatcherInterface $eventDispatcher,
-        CreateAndStartAProcess $createStartAndWaitAProcess = null)
+        ProcessFactoryInterface $processFactory,
+        $template = null,
+        $cwd = null)
     {
-        $this->queue = $queue;
-        $this->baseCommandLine = $baseCommandLine;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->createAndStartAProcess = $createStartAndWaitAProcess ?: new CreateAndStartAProcess();
         $this->processCounter = 0;
+        $this->queue = $queue;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->processFactory = $processFactory;
+        $this->cwd = $cwd;
+        $this->template = $template;
     }
 
     public function onChannelIsWaiting(ChannelIsWaitingEvent $event)
@@ -42,19 +45,32 @@ class ConsumerListener
         $event->stopPropagation();
 
         $value = null;
-        while (null === ($value = $this->queue->dequeue())) {
-            if ($this->queue->isFrozen()) {
+        $isEmpty = true;
+        while ($isEmpty) {
+            try {
+                $value = $this->queue->dequeue();
+                $isEmpty = false;
+            } catch (\RuntimeException $e) {
+                $isEmpty = true;
+            }
+            if ($isEmpty && $this->queue->isFrozen()) {
                 return;
             }
-            usleep(1000);
+            if ($isEmpty) {
+                usleep(200);
+            }
         }
         ++$this->processCounter;
-        $process = $this->createAndStartAProcess->createAndStartAProcess(
+
+        $process = $this->processFactory->create(
             $channel,
-            $this->baseCommandLine,
             $value,
-            $this->processCounter
+            $this->processCounter,
+            $this->template,
+            $this->cwd
         );
+        $process->start();
+
         $this->eventDispatcher->dispatch(EventsName::PROCESS_STARTED, new ProcessStartedEvent($process));
     }
 }

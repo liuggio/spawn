@@ -1,16 +1,16 @@
 <?php
 
-namespace Liuggio\Fastest\Producer;
+namespace Liuggio\Concurrent\Producer;
 
 class StdInProducerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @expectedException \Liuggio\Fastest\Exception\StdInMustBeAValidResourceException
+     * @expectedException \Liuggio\Concurrent\Exception\StdInMustBeAValidResourceException
      */
     public function shouldRaiseAnExceptionIfInputHasError()
     {
-        $queue = $this->getMock('\Liuggio\Fastest\Queue\QueueInterface');
+        $queue = $this->getMock('\Liuggio\Concurrent\Queue\QueueInterface');
         $sut = new StdInProducer('xyz');
         $sut->produce($queue);
     }
@@ -25,10 +25,10 @@ line
 line
 line
 EOF;
-        $createTmpFileName = tempnam(sys_get_temp_dir(), 'fastest_test');
+        $createTmpFileName = tempnam(sys_get_temp_dir(), 'concurrent_test');
         file_put_contents($createTmpFileName, $buffer);
 
-        $queue = $this->getMock('\Liuggio\Fastest\Queue\QueueInterface');
+        $queue = $this->getMock('\Liuggio\Concurrent\Queue\QueueInterface');
         $queue
             ->expects($this->exactly(3))
             ->method('enqueue');
@@ -39,7 +39,7 @@ EOF;
     /**
      * @test
      *
-     * This test intents to detect problems when reading from stdin, simulating a delayed input into fastest.
+     * This test intents to detect problems when reading from stdin, simulating a delayed input into concurrent.
      *
      * For example stream_set_blocking(stdin, false) was causing problems because it returned too fast
      * and stdin was read as an empty string from certain programs (i.e. behat --list-scenarios)
@@ -50,11 +50,15 @@ EOF;
         $bootstrapFile = realpath(__DIR__.'/../../vendor/autoload.php');
         $code = '
             require "'.$bootstrapFile.'";
-            $queue = new \Liuggio\Fastest\Queue\SplQueue();
-            $producer = new \Liuggio\Fastest\Producer\StdInProducer();
+            $queue = new \Liuggio\Concurrent\Queue\SplQueue();
+            $producer = new \Liuggio\Concurrent\Producer\StdInProducer();
             $producer->produce($queue);
-            while(null !== ($value = $queue->dequeue())) {
-                echo $value . PHP_EOL;
+            try {
+                while($value = $queue->dequeue()) {
+                    echo $value . PHP_EOL;
+                }
+            }catch(\RuntimeException  $e) {
+                // queue empty :)
             }
         ';
         $code = escapeshellarg($code);

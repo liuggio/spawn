@@ -1,15 +1,17 @@
 <?php
 
-namespace Liuggio\Fastest\Event;
+namespace Liuggio\Concurrent\Event;
 
-use Liuggio\Fastest\Process\Process;
+use Liuggio\Concurrent\Process\ClosureProcess;
+use Liuggio\Concurrent\Process\Process;
 use Symfony\Component\EventDispatcher\Event;
 
 final class ProcessGeneratedBufferEvent extends Event
 {
+    /** @var Process|ClosureProcess */
     private $process;
 
-    public function __construct(Process $process)
+    public function __construct($process)
     {
         $this->process = $process;
     }

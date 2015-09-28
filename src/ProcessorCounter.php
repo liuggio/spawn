@@ -1,25 +1,25 @@
 <?php
 
-namespace Liuggio\Fastest;
+namespace Liuggio\Concurrent;
 
 /**
- *  Number of processors seen by the OS and used for process scheduling.
+ *  Number of processors seen by the OS and used for processes scheduling.
  */
 class ProcessorCounter
 {
     const PROC_DEFAULT_NUMBER = 4;
     const PROC_CPUINFO = '/proc/cpuinfo';
     /** @var int|null */
-    private static $count = null;
+    public static $count = null;
     /** @var string */
     private $procCPUInfo;
     /** @var string */
     private $os;
 
-    public function __construct($procCPUInfo = self::PROC_CPUINFO, $os = PHP_OS)
+    public function __construct($procCPUInfo = null, $os = null)
     {
-        $this->procCPUInfo = $procCPUInfo;
-        $this->os = $os;
+        $this->procCPUInfo = $procCPUInfo ?: self::PROC_CPUINFO;
+        $this->os = $os ?: PHP_OS;
     }
 
     public function execute()

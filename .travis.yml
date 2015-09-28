@@ -2,6 +2,8 @@ language: php
 
 php: [5.3, 5.4, 5.5, 5.6, hhvm-nightly]
 
+sudo: false
+
 matrix:
   allow_failures:
     - php: hhvm-nightly
@@ -11,5 +13,5 @@ before_script:
   - composer install --prefer-source
 
 script:
-  - find tests/ -name "*Test.php" | php fastest -v
+  - bin/phpunit -c .
   - bin/php-cs-fixer fix --verbose . --level=symfony

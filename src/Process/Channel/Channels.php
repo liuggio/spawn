@@ -1,8 +1,8 @@
 <?php
 
-namespace Liuggio\Fastest;
+namespace Liuggio\Concurrent\Process\Channel;
 
-use Liuggio\Fastest\Process\Process;
+use Liuggio\Concurrent\Process\Process;
 
 class Channels
 {
@@ -30,12 +30,12 @@ class Channels
     }
 
     /**
-     * Assign a channel to a process.
+     * Assign a channel to a processes.
      *
      * @param Channel $channel
      * @param Process $process
      */
-    public function assignAProcess(Channel $channel, Process $process)
+    public function assignAProcess(Channel $channel, $process)
     {
         $this->channels[$channel->getId()] = $channel->assignToAProcess($process);
     }

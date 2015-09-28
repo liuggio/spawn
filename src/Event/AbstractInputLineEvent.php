@@ -1,27 +1,26 @@
 <?php
 
-namespace Liuggio\Fastest\Event;
+namespace Liuggio\Concurrent\Event;
 
-use Liuggio\Fastest\InputLine;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractInputLineEvent extends Event
 {
-    /** @var InputLine */
+    /** @var mixed */
     private $inputLine;
 
     /**
      * NewCommandLoadedEvent constructor.
      *
-     * @param InputLine $command
+     * @param $command
      */
-    public function __construct(InputLine $command)
+    public function __construct($command)
     {
         $this->inputLine = $command;
     }
 
     /**
-     * @return InputLine
+     * @return mixed
      */
     public function getInputLine()
     {

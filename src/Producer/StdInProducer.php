@@ -1,10 +1,9 @@
 <?php
 
-namespace Liuggio\Fastest\Producer;
+namespace Liuggio\Concurrent\Producer;
 
-use Liuggio\Fastest\InputLine;
-use Liuggio\Fastest\Exception\StdInMustBeAValidResourceException;
-use Liuggio\Fastest\Queue\QueueInterface;
+use Liuggio\Concurrent\Exception\StdInMustBeAValidResourceException;
+use Liuggio\Concurrent\Queue\QueueInterface;
 
 class StdInProducer implements ProducerInterface
 {
@@ -44,7 +43,7 @@ class StdInProducer implements ProducerInterface
     {
         $line = trim($line);
         if (!empty($line)) {
-            $queue->enqueue(InputLine::fromString($line));
+            $queue->enqueue($line);
         }
     }
 

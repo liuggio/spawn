@@ -1,33 +1,36 @@
 <?php
 
-namespace Liuggio\Fastest\Queue;
+namespace Liuggio\Concurrent\Queue;
 
-use Liuggio\Fastest\Exception\EnqueueIsNotPossibleQueueIsFrozenException;
-use Liuggio\Fastest\InputLine;
+use Liuggio\Concurrent\Exception\TheQueueMustNotBeFrozenToEnqueueException;
 
-class SplQueue implements QueueInterface
+class SplQueue extends \SplQueue implements QueueInterface
 {
-    /** @var  \SplQueue */
-    private $queue;
     /** @var  bool */
     private $isFrozen;
 
     /**
      * {@inheritdoc}
      */
-    public function __construct(\SplQueue $queue = null)
+    public function __construct($queue = null)
     {
         $this->isFrozen = false;
-        $this->queue = $queue ?: new \SplQueue(\SplDoublyLinkedList::IT_MODE_FIFO & \SplDoublyLinkedList::IT_MODE_DELETE);
+
+        parent::setIteratorMode(\SplDoublyLinkedList::IT_MODE_FIFO & \SplDoublyLinkedList::IT_MODE_DELETE);
+        if (is_array($queue)) {
+            foreach ($queue as $item) {
+                $this->enqueue($item);
+            }
+        }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function enqueue(InputLine $value)
+    public function enqueue($value)
     {
         $this->assertIsNotFrozen();
-        $this->queue->enqueue($value);
+        parent::enqueue($value);
     }
 
     /**
@@ -35,13 +38,7 @@ class SplQueue implements QueueInterface
      */
     public function dequeue()
     {
-        try {
-            $value = $this->queue->dequeue();
-
-            return $value;
-        } catch (\Exception $e) {
-            // do nothing
-        }
+        return parent::dequeue();
 
         return;
     }
@@ -52,8 +49,8 @@ class SplQueue implements QueueInterface
     public function randomize()
     {
         $randomizedArray = array();
-        for ($this->queue->rewind(); $this->queue->valid(); $this->queue->next()) {
-            $randomizedArray[] = $this->queue->current();
+        for ($this->rewind(); $this->valid(); $this->next()) {
+            $randomizedArray[] = $this->current();
         }
 
         shuffle($randomizedArray);
@@ -82,18 +79,10 @@ class SplQueue implements QueueInterface
         $this->isFrozen = true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
-    {
-        return $this->queue->count();
-    }
-
     private function assertIsNotFrozen()
     {
         if ($this->isFrozen()) {
-            throw new EnqueueIsNotPossibleQueueIsFrozenException();
+            throw new TheQueueMustNotBeFrozenToEnqueueException();
         }
     }
 }

@@ -1,43 +1,54 @@
 <?php
 
-namespace Liuggio\Fastest;
+namespace Liuggio\Concurrent\Process;
 
-use Liuggio\Fastest\Event\ChannelIsWaitingEvent;
-use Liuggio\Fastest\Event\EmptiedQueueEvent;
-use Liuggio\Fastest\Event\EventsName;
-use Liuggio\Fastest\Event\FrozenQueueEvent;
-use Liuggio\Fastest\Event\LoopCompletedEvent;
-use Liuggio\Fastest\Event\LoopStartedEvent;
-use Liuggio\Fastest\Event\ProcessCompletedEvent;
-use Liuggio\Fastest\Event\ProcessGeneratedBufferEvent;
-use Liuggio\Fastest\Event\ProcessStartedEvent;
-use Liuggio\Fastest\Process\Process;
+use Liuggio\Concurrent\Process\Channel\Channels;
+use Liuggio\Concurrent\Event\ChannelIsWaitingEvent;
+use Liuggio\Concurrent\Event\EmptiedQueueEvent;
+use Liuggio\Concurrent\Event\EventsName;
+use Liuggio\Concurrent\Event\FrozenQueueEvent;
+use Liuggio\Concurrent\Event\LoopCompletedEvent;
+use Liuggio\Concurrent\Event\LoopStartedEvent;
+use Liuggio\Concurrent\Event\ProcessCompletedEvent;
+use Liuggio\Concurrent\Event\ProcessGeneratedBufferEvent;
+use Liuggio\Concurrent\Event\ProcessStartedEvent;
+use Liuggio\Concurrent\ProcessorCounter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-class Supervisor implements EventSubscriberInterface
+class Processes implements EventSubscriberInterface
 {
-    /** @var  EventDispatcherInterface */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
-    /** @var int */
-    private $channelsNumber;
+    /** @var int|float */
+    private $pollingTime;
+    /** @var int|float|null */
+    private $parallelChannels;
+    /** @var Callable */
+    private $exitCodeStrategy;
+    /** @var Channels */
+    private $channels;
     /** @var bool */
     private $queueIsEmpty;
     /** @var bool */
     private $queueIsFrozen;
-    /** @var Channels */
-    private $channels;
-    /** @var int */
-    private $exitCode;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, $channelsNumber)
-    {
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        $pollingTime = null,
+        $forceToUseNChannels = null,
+        $exitCodeStrategy = null
+    ) {
         $this->eventDispatcher = $eventDispatcher;
-        $this->channelsNumber = $channelsNumber;
+        $this->pollingTime = $pollingTime ?: 200;
+        $this->parallelChannels = $this->calculateChannels($forceToUseNChannels);
+        $this->exitCodeStrategy = $this->createExitStrategyCallable($exitCodeStrategy);
+        $this->exitCode = 0;
         $this->queueIsEmpty = false;
         $this->queueIsFrozen = false;
-        $this->exitCode = 0;
+        $this->channels = Channels::createWaiting($this->parallelChannels);
     }
 
     public static function getSubscribedEvents()
@@ -70,9 +81,8 @@ class Supervisor implements EventSubscriberInterface
     {
         $channel = $event->getProcess()->getChannel();
         $exitCode = $event->getProcess()->getExitCode();
-        if (0 !== $exitCode && null !== $exitCode) {
-            $this->exitCode = $exitCode;
-        }
+        $exitCodeStrategy = $this->exitCodeStrategy;
+        $this->exitCode = $exitCodeStrategy($this->exitCode, $exitCode);
 
         $this->channels->setEmpty($channel);
         $this->eventDispatcher->dispatch(EventsName::CHANNEL_IS_WAITING, new ChannelIsWaitingEvent($channel));
@@ -80,14 +90,13 @@ class Supervisor implements EventSubscriberInterface
 
     public function loop()
     {
-        $this->channels = Channels::createWaiting($this->channelsNumber);
         $stopWatch = new Stopwatch();
         $stopWatch->start('loop');
-        $this->eventDispatcher->dispatch(EventsName::LOOP_STARTED, new LoopStartedEvent($this->channelsNumber));
+        $this->eventDispatcher->dispatch(EventsName::LOOP_STARTED, new LoopStartedEvent($this->parallelChannels));
         $this->notifyWaitingChannel($this->channels->getWaitingChannels());
         while (!($this->queueIsFrozen && $this->queueIsEmpty && count($assignedChannels = $this->channels->getAssignedChannels()) < 1)) {
             $this->checkTerminatedProcessOnChannels($this->channels->getAssignedChannels());
-            usleep(200);
+            usleep($this->pollingTime);
         }
         $stopWatchEvent = $stopWatch->stop('loop');
         $this->eventDispatcher->dispatch(EventsName::LOOP_COMPLETED, new LoopCompletedEvent($stopWatchEvent, $this->exitCode));
@@ -108,17 +117,43 @@ class Supervisor implements EventSubscriberInterface
     private function checkTerminatedProcessOnChannels($assignedChannels)
     {
         foreach ($assignedChannels as $channel) {
-            /** @var Process $process */
+            /** @var Process|ClosureProcess $process */
             $process = $channel->getProcess();
 
             $this->eventDispatcher->dispatch(
                 EventsName::PROCESS_GENERATED_BUFFER,
                 new ProcessGeneratedBufferEvent($process)
             );
+            if (!$process->isTerminated()) {
+                continue;
+            }
 
-            if ($process->isTerminated()) {
-                $this->eventDispatcher->dispatch(EventsName::PROCESS_COMPLETED, new ProcessCompletedEvent($process));
+            $this->eventDispatcher->dispatch(EventsName::PROCESS_COMPLETED, new ProcessCompletedEvent($process));
+            if ($process->isSuccessful()) {
+                $this->eventDispatcher->dispatch(EventsName::PROCESS_COMPLETED_SUCCESSFUL, new ProcessCompletedEvent($process));
             }
         }
+    }
+
+    private function calculateChannels($forceToUseNChannels = 0)
+    {
+        if ((int) $forceToUseNChannels > 0) {
+            return $forceToUseNChannels;
+        }
+        $processorCounter = new ProcessorCounter();
+
+        return $processorCounter->execute();
+    }
+
+    private function createExitStrategyCallable(callable $exitStrategyCallable = null)
+    {
+        if (null != $exitStrategyCallable) {
+            return $exitStrategyCallable;
+        }
+
+        return function ($current, $exitCode) {
+
+            return ($current == 0 && $exitCode == 0) ? 0 : $exitCode;
+        };
     }
 }

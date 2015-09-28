@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Fastest;
+namespace Liuggio\Concurrent;
 
 /**
  * Value Object for the Command to be executed in parallel.

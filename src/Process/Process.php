@@ -1,9 +1,8 @@
 <?php
 
-namespace Liuggio\Fastest\Process;
+namespace Liuggio\Concurrent\Process;
 
-use Liuggio\Fastest\CommandLine;
-use Liuggio\Fastest\InputLine;
+use Liuggio\Concurrent\CommandLine;
 use Symfony\Component\Process\Process as BaseProcess;
 
 class Process extends BaseProcess
@@ -14,24 +13,27 @@ class Process extends BaseProcess
     public function __construct(
         CommandLine $commandLine,
         ProcessEnvironment $processEnvironment,
-        $timeout = null)
+        $timeout = null,
+        $cwd = null)
     {
         $this->processEnvironment = $processEnvironment;
 
-        parent::__construct((string) $commandLine, null, $this->processEnvironment->exportToEnvsArray());
-        $this->setTimeout($timeout);
-        // compatibility to SF 2.2
-        if (method_exists($this, 'setIdleTimeout')) {
-            $this->setIdleTimeout($timeout);
+        parent::__construct((string) $commandLine, $cwd, $this->processEnvironment->exportToEnvsArray());
+        if ($timeout) {
+            $this->setTimeout($timeout);
+           // compatibility to SF 2.2
+            if (method_exists($this, 'setIdleTimeout')) {
+                $this->setIdleTimeout($timeout);
+            }
         }
     }
 
     /**
-     * @return InputLine
+     * @return mixed
      */
     public function getInputLine()
     {
-        return new InputLine($this->processEnvironment->getArgument());
+        return new $this->processEnvironment->getInputLine();
     }
 
     /**

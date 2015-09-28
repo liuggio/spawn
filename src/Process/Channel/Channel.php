@@ -1,8 +1,9 @@
 <?php
 
-namespace Liuggio\Fastest;
+namespace Liuggio\Concurrent\Process\Channel;
 
-use Liuggio\Fastest\Process\Process;
+use Liuggio\Concurrent\Process\ClosureProcess;
+use Liuggio\Concurrent\Process\Process;
 
 class Channel
 {
@@ -12,10 +13,10 @@ class Channel
     private $assignedProcessesCounter;
     /** @var int */
     private $channelsNumber;
-    /** @var Process */
+    /** @var Process|ClosureProcess */
     private $process;
 
-    private function __construct($channelId, $channelsNumber, $commandsCounter = 0, Process $process = null)
+    private function __construct($channelId, $channelsNumber, $commandsCounter = 0, $process = null)
     {
         $this->channelId = $channelId;
         $this->channelsNumber = $channelsNumber;
@@ -38,11 +39,11 @@ class Channel
     /**
      * Assigns a channel, incrementing the command line counter.
      *
-     * @param Process $process
+     * @param Process|ClosureProcess $process
      *
      * @return Channel
      */
-    public function assignToAProcess(Process $process)
+    public function assignToAProcess($process)
     {
         return new self($this->getId(), $this->channelsNumber, 1 + $this->getAssignedProcessesCounter(), $process);
     }

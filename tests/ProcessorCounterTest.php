@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Fastest;
+namespace Liuggio\Concurrent;
 
 class ProcessorCounterTest extends \PHPUnit_Framework_TestCase
 {
@@ -9,7 +9,9 @@ class ProcessorCounterTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldCountTheNumberOfProcessorInLinux()
     {
-        $processorCount = new ProcessorCounter(__DIR__.'/Fixture/proc_cpuinfo', 'Linux');
+        $path = __DIR__.'/Fixture/proc_cpuinfo';
+        ProcessorCounter::$count = null;
+        $processorCount = new ProcessorCounter($path, 'Linux');
         $this->assertEquals(4, $processorCount->execute());
     }
 }

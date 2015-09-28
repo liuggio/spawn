@@ -1,41 +1,38 @@
 <?php
 
-namespace Liuggio\Fastest\Queue;
+namespace Liuggio\Concurrent\Queue;
 
-use Liuggio\Fastest\Event\FrozenQueueEvent;
-use Liuggio\Fastest\InputLine;
-use Liuggio\Fastest\Event\InputLineDequeuedEvent;
-use Liuggio\Fastest\Event\InputLineEnqueuedEvent;
-use Liuggio\Fastest\Event\EventsName;
-use Liuggio\Fastest\Event\EmptiedQueueEvent;
+use Liuggio\Concurrent\Event\FrozenQueueEvent;
+use Liuggio\Concurrent\Event\InputLineDequeuedEvent;
+use Liuggio\Concurrent\Event\InputLineEnqueuedEvent;
+use Liuggio\Concurrent\Event\EventsName;
+use Liuggio\Concurrent\Event\EmptiedQueueEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class EventDispatcherQueue implements QueueInterface
+class EventDispatcherQueue extends SplQueue implements QueueInterface
 {
-    /** @var  QueueInterface */
-    private $queue;
     /** @var  EventDispatcherInterface */
     private $eventDispatcher;
 
     /**
      * EventDispatcherQueue constructor.
      *
-     * @param QueueInterface           $queue
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param EventDispatcherInterface|null $eventDispatcher
+     * @param null|array                    $array
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher = null, QueueInterface $queue = null)
+    public function __construct(EventDispatcherInterface $eventDispatcher = null, $array = null)
     {
-        $this->queue = $queue ?: new SplQueue();
         $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
+        parent::__construct($array);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function enqueue(InputLine $value)
+    public function enqueue($value)
     {
-        $this->queue->enqueue($value);
+        parent::enqueue($value);
         $this->eventDispatcher->dispatch(EventsName::INPUT_LINE_ENQUEUED, new InputLineEnqueuedEvent($value));
     }
 
@@ -44,13 +41,12 @@ class EventDispatcherQueue implements QueueInterface
      */
     public function dequeue()
     {
-        $commandLine = $this->queue->dequeue();
-        if (null === $commandLine) {
+        try {
+            $commandLine = parent::dequeue();
+        } catch (\RuntimeException $e) {
             $this->eventDispatcher->dispatch(EventsName::QUEUE_IS_EMPTY, new EmptiedQueueEvent());
-
-            return;
+            throw $e;
         }
-
         $this->eventDispatcher->dispatch(EventsName::INPUT_LINE_DEQUEUED, new InputLineDequeuedEvent($commandLine));
 
         return $commandLine;
@@ -61,7 +57,7 @@ class EventDispatcherQueue implements QueueInterface
      */
     public function randomize()
     {
-        $newQueue = $this->queue->randomize();
+        $newQueue = parent::randomize();
 
         return new self($this->eventDispatcher, $newQueue);
     }
@@ -69,29 +65,13 @@ class EventDispatcherQueue implements QueueInterface
     /**
      * {@inheritdoc}
      */
-    public function isFrozen()
-    {
-        return $this->queue->isFrozen();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function freeze()
     {
-        if ($this->queue->isFrozen()) {
+        if (parent::isFrozen()) {
             return;
         }
 
-        $this->queue->freeze();
+        parent::freeze();
         $this->eventDispatcher->dispatch(EventsName::QUEUE_IS_FROZEN, new FrozenQueueEvent());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
-    {
-        return $this->queue->count();
     }
 }

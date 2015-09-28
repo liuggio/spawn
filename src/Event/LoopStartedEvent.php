@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Fastest\Event;
+namespace Liuggio\Concurrent\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 

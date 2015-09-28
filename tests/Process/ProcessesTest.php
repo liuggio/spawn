@@ -1,10 +1,10 @@
 <?php
 
-namespace Liuggio\Fastest;
+namespace Liuggio\Concurrent\Process;
 
-use Liuggio\Fastest\Event\EventsName;
+use Liuggio\Concurrent\Event\EventsName;
 
-class SupervisorTest extends \PHPUnit_Framework_TestCase
+class ProcessesTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
     public function shouldLoopUntilQueueisEmptiedAndFrozen()
@@ -27,13 +27,13 @@ class SupervisorTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with($this->equalTo(EventsName::LOOP_COMPLETED));
 
-        $supervisor = new Supervisor($ed, 2);
+        $processes = new Processes($ed, null, 2);
 
-        $ev = $this->getMock('\Liuggio\Fastest\Event\FrozenQueueEvent');
-        $supervisor->onFrozenQueue($ev);
-        $ev2 = $this->getMock('\Liuggio\Fastest\Event\EmptiedQueueEvent');
-        $supervisor->onQueueEmptied($ev2);
+        $ev = $this->getMock('\Liuggio\Concurrent\Event\FrozenQueueEvent');
+        $processes->onFrozenQueue($ev);
+        $ev2 = $this->getMock('\Liuggio\Concurrent\Event\EmptiedQueueEvent');
+        $processes->onQueueEmptied($ev2);
 
-        $supervisor->loop();
+        $processes->loop();
     }
 }

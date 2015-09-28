@@ -1,8 +1,8 @@
 <?php
 
-namespace Liuggio\Fastest\Producer;
+namespace Liuggio\Concurrent\Producer;
 
-use Liuggio\Fastest\Queue\QueueInterface;
+use Liuggio\Concurrent\Queue\QueueInterface;
 
 interface ProducerInterface
 {

@@ -1,9 +1,8 @@
 <?php
 
-namespace Liuggio\Fastest\Process;
+namespace Liuggio\Concurrent\Process;
 
-use Liuggio\Fastest\Channel;
-use Liuggio\Fastest\InputLine;
+use Liuggio\Concurrent\Process\Channel\Channel;
 
 class ProcessEnvironment
 {
@@ -16,23 +15,20 @@ class ProcessEnvironment
 
     /** @var Channel */
     private $channel;
-    /** @var int */
-    private $channelsNumber;
-    /** @var InputLine */
-    private $inputLine;
+    /** @var mixed */
+    private $arguments;
     /** @var int */
     private $incrementNumber;
 
     /**
      * @param Channel $channel
-     * @param $channelsNumber
-     * @param InputLine $inputLine
-     * @param $incrementNumber
+     * @param mixed   $arguments
+     * @param int     $incrementNumber
      */
-    public function __construct(Channel $channel, InputLine $inputLine, $incrementNumber)
+    public function __construct(Channel $channel, $arguments, $incrementNumber)
     {
         $this->channel = $channel;
-        $this->inputLine = $inputLine;
+        $this->arguments = $arguments;
         $this->incrementNumber = $incrementNumber;
     }
 
@@ -42,7 +38,7 @@ class ProcessEnvironment
             self::ENV_TEST_CHANNEL.'='.$this->channel->getId(),
             self::ENV_TEST_CHANNEL_READABLE.'='.$this->getReadableChannel(),
             self::ENV_TEST_CHANNELS_NUMBER.'='.$this->getChannelsNumber(),
-            self::ENV_TEST_ARGUMENT.'='.$this->getInputLine(),
+            self::ENV_TEST_ARGUMENT.'='.$this->getArguments(),
             self::ENV_TEST_INCREMENTAL_NUMBER.'='.$this->getIncrementalNumber(),
             self::ENV_TEST_IS_FIRST_ON_CHANNEL.'='.(int) $this->isTheFirstCommandOnChannel(),
         );
@@ -65,11 +61,11 @@ class ProcessEnvironment
     }
 
     /**
-     * @return InputLine
+     * @return mixed
      */
-    public function getInputLine()
+    public function getArguments()
     {
-        return $this->inputLine;
+        return $this->arguments;
     }
 
     /**

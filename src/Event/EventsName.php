@@ -1,11 +1,12 @@
 <?php
 
-namespace Liuggio\Fastest\Event;
+namespace Liuggio\Concurrent\Event;
 
 final class EventsName
 {
     const PROCESS_STARTED = 'process_started';
     const PROCESS_COMPLETED = 'process_completed';
+    const PROCESS_COMPLETED_SUCCESSFUL = 'process_completed_successful';
     const PROCESS_GENERATED_BUFFER = 'process_generated_buffer';
     const INPUT_LINE_ENQUEUED = 'command_line_enqueued';
     const INPUT_LINE_DEQUEUED = 'command_line_dequeued';

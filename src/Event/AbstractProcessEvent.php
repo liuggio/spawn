@@ -1,21 +1,22 @@
 <?php
 
-namespace Liuggio\Fastest\Event;
+namespace Liuggio\Concurrent\Event;
 
-use Liuggio\Fastest\Process\Process;
+use Liuggio\Concurrent\Process\ClosureProcess;
+use Liuggio\Concurrent\Process\Process;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractProcessEvent extends Event
 {
     protected $process;
 
-    public function __construct(Process $process)
+    public function __construct($process)
     {
         $this->process = $process;
     }
 
     /**
-     * @return Process
+     * @return ClosureProcess|Process
      */
     public function getProcess()
     {

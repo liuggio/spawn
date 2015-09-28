@@ -1,24 +1,24 @@
 <?php
 
-namespace Liuggio\Fastest\Queue;
-
-use Liuggio\Fastest\InputLine;
+namespace Liuggio\Concurrent\Queue;
 
 interface QueueInterface
 {
     /**
      * Adds an element to the queue.
      *
-     * @param InputLine $value <p>
-     *                         The value to enqueue.
-     *                         </p>
+     * @param mixed $value <p>
+     *                     The value to enqueue.
+     *                     </p>
      */
-    public function enqueue(InputLine $value);
+    public function enqueue($value);
 
     /**
      * Dequeues a node from the queue.
      *
-     * @return InputLine|null The value of the dequeued node or null if the queue is empty.
+     * @return mixed|null The value of the dequeued node or null if the queue is empty.
+     *
+     * @throws \RuntimeException when the data-structure is empty.
      */
     public function dequeue();
 

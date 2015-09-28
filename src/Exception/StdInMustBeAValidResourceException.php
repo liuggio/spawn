@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Fastest\Exception;
+namespace Liuggio\Concurrent\Exception;
 
 class StdInMustBeAValidResourceException extends \Exception
 {
