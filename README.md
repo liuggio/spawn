@@ -1,9 +1,29 @@
-Concurrent processing of closures and commands in PHP with ease.
+Concurrent processing of processes in PHP, and also closures :)
 ================================================================
 
+The main job is to handle concurrent processes using the Symfony Process component,
+in order to improve the performance.
+
+``` php
+$concurrent = new Concurrent();
+$concurrent
+    ->processes(range(1,10), "printenv > '/tmp/envs_{}{p}.log';")
+    ->onCompleted(function(Process $process){ /* print stats */});
+    ->start();
+```
+
+This is good to have when you have to execute a bunch of commands (like unit-tests/functional-tests/CS fixes/files handling),
+better if you use it in `dev` environment.
+
+## Concurrent \Closure? Really?
+
+Yes with this library you can use concurrent closures,
+**BUT** PHP is not `GO-lang` neither `Erlang` or any other language famous for concurrency,
+and in order to simulate a thread or routine the closure is executed in a new PhpProcess.
+
+
 1. executes and handles **concurrent PHP closures**.
-2. executes and handles **concurrent processes**.
-3. **spawns** a single closure as an independent process.
+2. **spawns** a single closure as an independent process.
 
 ### Concurrent closures: Upload images to your CDN
 
@@ -23,15 +43,6 @@ $concurrent->closures($files, function(SplFileInfo $file) {
 ```
 
 Each closure is executed in isolation using the [PhpProcess](http://symfony.com/doc/current/components/processes.html#executing-php-code-in-isolation) component.
-
-### Concurrent processes
-
-``` php
-$concurrent = new Concurrent();
-$concurrent
-    ->processes(range(1,10), "printenv > '/tmp/envs_{}{p}.log';")
-    ->start();
-```
 
 ### Spawn a single isolated closure
 
@@ -96,12 +107,11 @@ Listeners can be attached to `closures` and `processes`.
 
 There are not so many libraries that handle concurrent processes.
 The best I found is about forking processes [spork](https://github.com/kriswallsmith/spork)
-it features a great API but it needs several PHP extensions.
+it features a great API and with no work-around but it needs several PHP extensions.
 
 ### License:
 
 MIT License see the [License](./LICENSE).
-
 
 ### More fun?
 
