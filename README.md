@@ -52,7 +52,7 @@ echo $processes->getOutput(); // "super heavy routine"
 ### Advanced
 
 1. The callable is executed in a new isolated processes also with its "use" references.
-2. It's possible add a listener for event handling.
+2. It's possible to add a listener for event handling.
 3. It's possible to get the return value of each callable, the ErrorOutput, the Output and other information.
 
 ``` php
