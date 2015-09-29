@@ -4,6 +4,7 @@ namespace Liuggio\Concurrent;
 
 use Liuggio\Concurrent\Event\EmptiedQueueEvent;
 use Liuggio\Concurrent\Event\EventsName;
+use Liuggio\Concurrent\Event\LoopCompletedEvent;
 use Liuggio\Concurrent\Event\ProcessCompletedEvent;
 use Liuggio\Concurrent\Event\ProcessGeneratedBufferEvent;
 use Liuggio\Concurrent\Exception\LoopAlreadyStartedException;
@@ -45,10 +46,10 @@ class ConcurrentLoop
             $this->onCompleted($callable);
         }
         $this->loopRunning = true;
-        $this->processes->loop();
+        $exitCode = $this->processes->loop();
         $this->loopRunning = false;
 
-        return $this;
+        return $exitCode;
     }
 
     /**
@@ -115,6 +116,27 @@ class ConcurrentLoop
         $this->eventDispatcher->addListener(EventsName::QUEUE_IS_EMPTY,
             function (EmptiedQueueEvent $event) use ($callable) {
                 $callable();
+            }
+        );
+
+        return $this;
+    }
+
+    /**
+     * Add the callable as listener.
+     *
+     * @param callable $callable
+     *
+     * @return $this
+     *
+     * @api
+     */
+    public function onLoopCompleted(callable $callable)
+    {
+        $this->assertLoopNotStarted();
+        $this->eventDispatcher->addListener(EventsName::LOOP_COMPLETED,
+            function (LoopCompletedEvent $event) use ($callable) {
+                $callable($event->getStopwatchEvent());
             }
         );
 

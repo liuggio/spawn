@@ -76,5 +76,3 @@ echo $c->stop(%s($fn, $args));
         };
     }
 }
-
-

@@ -17,7 +17,7 @@ class SplQueue extends \SplQueue implements QueueInterface
         $this->isFrozen = false;
 
         parent::setIteratorMode(\SplDoublyLinkedList::IT_MODE_FIFO & \SplDoublyLinkedList::IT_MODE_DELETE);
-        if (is_array($queue)) {
+        if (null !== $queue) {
             foreach ($queue as $item) {
                 $this->enqueue($item);
             }

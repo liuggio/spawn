@@ -2,8 +2,8 @@ Concurrent processing of closures and commands in PHP with ease.
 ================================================================
 
 1. executes and handles **concurrent PHP closures**.
-2. executes and handles **concurrent processes*.
-3. *spawns* a single closures as independent processes.
+2. executes and handles **concurrent processes**.
+3. **spawns** a single closures as independent processes.
 
 ### Concurrent closures: Upload images to your CDN
 
@@ -30,7 +30,7 @@ Each closure is executed in isolation using the [PhpProcess](http://symfony.com/
 $concurrent = new Concurrent();
 $concurrent
     ->processes(range(1,10), "printenv > '/tmp/envs_{}{p}.log';")
-    ->loop();
+    ->start();
 ```
 
 ### Spawn a single isolated closure
@@ -100,3 +100,8 @@ has great API but it needs several PHP extensions.
 #### License:
 
 MIT License see the [License](./LICENSE).
+
+#### More fun?
+
+- see how the [travis.yml](./.travis.yml) run test suite with [concurrent_tests.php](./tests/concurrent_tests.php).
+- have fun with [fastest](https://github.com/liuggio/fastest)
