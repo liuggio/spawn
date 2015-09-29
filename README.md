@@ -1,26 +1,26 @@
-Concurrent processing of processes in PHP, and also closures :)
-================================================================
+Concurrent handling of processes in PHP (and also closures)
+===========================================================
 
 The main job is to handle concurrent processes using the Symfony Process component,
-in order to improve the performance.
+in order to improve the performance when you have to execute a bunch of commands
+(like unit-tests/functional-tests/CS fixes/files handling) in your 'dev' environment.
 
 ``` php
 $concurrent = new Concurrent();
 $concurrent
     ->processes(range(1,10), "printenv > '/tmp/envs_{}{p}.log';")
-    ->onCompleted(function(Process $process){ /* print stats */});
+    ->onCompleted(function(Process $singleProcess){ /* print stats */});
     ->start();
 ```
 
-This is good to have when you have to execute a bunch of commands (like unit-tests/functional-tests/CS fixes/files handling),
-better if you use it in `dev` environment.
-
 ## Concurrent \Closure? Really?
 
-Yes with this library you can use concurrent closures,
-**BUT** PHP is not `GO-lang` neither `Erlang` or any other language famous for concurrency,
-and in order to simulate a thread or routine the closure is executed in a new PhpProcess.
+Yes! With this library you can use concurrent closures,
+**BUT** PHP is not `Go-lang` neither `Erlang` or any other famous language for concurrency,
+and in order to simulate a isolated routine the closure is serialized and executed in a new PhpProcess,
+be aware this is a workaround in order to speed up your 'dev' commands.
 
+With this library you can also do:
 
 1. executes and handles **concurrent PHP closures**.
 2. **spawns** a single closure as an independent process.
@@ -42,7 +42,7 @@ $concurrent->closures($files, function(SplFileInfo $file) {
 ->start();
 ```
 
-Each closure is executed in isolation using the [PhpProcess](http://symfony.com/doc/current/components/processes.html#executing-php-code-in-isolation) component.
+Each closure is executed in isolation using the [PhpProcess](http://symfony.com/doc/current/components/process.html#executing-php-code-in-isolation) component.
 
 ### Spawn a single isolated closure
 
