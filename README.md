@@ -3,12 +3,12 @@ Concurrent processing of closures and commands in PHP with ease.
 
 1. executes and handles **concurrent PHP closures**.
 2. executes and handles **concurrent processes*.
-3. *spawns* a single closures as independent processes.
+3. *spawns* a single closure as an independent process.
 
 ### Concurrent closures: Upload images to your CDN
 
 Feed an iterator and it will break the job into multiple php scripts and spread them across many processes.
-The number of processes are the same of the computer's Core, to advantage the performance.
+In order to improve performances, the number of processes is equal to the number of computer's cores.
 
 ``` php
 $concurrent = new Concurrent();
@@ -51,9 +51,9 @@ echo $processes->getOutput(); // "super heavy routine"
 
 ### Advanced
 
-1. The callable are executed in a new isolated processes also with its "use" references.
-2. Is possible add a listener when events happens.
-3. Is possible to get the return value of each callable, the ErrorOutput, the Output and other information.
+1. The callable is executed in a new isolated processes also with its "use" references.
+2. It's possible to add a listener for event handling.
+3. It's possible to get the return value of each callable, the ErrorOutput, the Output and other information.
 
 ``` php
 $collaborator = new YourCollaborator(1,2,3,4);
@@ -81,7 +81,7 @@ $concurrent
 
 ### Events:
 
-Is possible to attach listeners to `closures` and `processes`.
+Listeners can be attached to `closures` and `processes`.
 
 ``` php
     ->onStarted(function(ClosureProcess|Process $process){});
@@ -93,9 +93,9 @@ Is possible to attach listeners to `closures` and `processes`.
 
 #### Other libs:
 
-There are no so many libraries that handle concurrent processes.
-The best I found is about forking process [spork](https://github.com/kriswallsmith/spork)
-has great API but it needs several PHP extensions.
+There are not so many libraries that handle concurrent processes.
+The best I found is about forking processes [spork](https://github.com/kriswallsmith/spork)
+it features a great API but it needs several PHP extensions.
 
 #### License:
 
