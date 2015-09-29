@@ -13,5 +13,5 @@ before_script:
   - composer install --prefer-source
 
 script:
-  - tests/concurrent_tests.php
+  - php tests/concurrent_tests.php
   - bin/php-cs-fixer fix --verbose . --level=symfony

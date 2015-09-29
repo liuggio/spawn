@@ -76,7 +76,7 @@ $concurrent
         $memory      = $processes->getMemory();
         $duration    = $processes->getDuration();
     })
-    ->loop();
+    ->start();
 ```
 
 ### Events:
@@ -89,14 +89,21 @@ Listeners can be attached to `closures` and `processes`.
     ->onSuccessful(function(ClosureProcess|Process $process){});
     ->onEmptyIterator(function (){});
     ->onPartialOutput(function(ClosureProcess|Process $process){})
+    ->onLoopCompleted(function ($exitCode, StopwatchEvent $event)
 ```
 
-#### Other libs:
+### Other libs:
 
 There are not so many libraries that handle concurrent processes.
 The best I found is about forking processes [spork](https://github.com/kriswallsmith/spork)
 it features a great API but it needs several PHP extensions.
 
-#### License:
+### License:
 
 MIT License see the [License](./LICENSE).
+
+
+### More fun?
+
+- see how the [travis.yml](./.travis.yml#16) run test suite with [concurrent_tests](./tests/concurrent_tests.php).
+- have fun with [fastest](https://github.com/liuggio/fastest)

@@ -136,7 +136,7 @@ class ConcurrentLoop
         $this->assertLoopNotStarted();
         $this->eventDispatcher->addListener(EventsName::LOOP_COMPLETED,
             function (LoopCompletedEvent $event) use ($callable) {
-                $callable($event->getStopwatchEvent());
+                $callable($event->getExitCode(), $event->getStopwatchEvent());
             }
         );
 
