@@ -6,8 +6,8 @@ in order to improve the performance when you have to execute a bunch of commands
 (like unit-tests/functional-tests/CS fixes/files handling) in your 'dev' environment.
 
 ``` php
-$concurrent = new Spawn();
-$concurrent
+$spawn = new Spawn();
+$spawn
     ->processes(range(1,10), "printenv > '/tmp/envs_{}{p}.log';")
     ->onCompleted(function(Process $singleProcess){ /* print stats */});
     ->start();
@@ -31,12 +31,12 @@ Feed an iterator and it will break the job into multiple php scripts and spread 
 In order to improve performances, the number of processes is equal to the number of computer's cores.
 
 ``` php
-$concurrent = new Spawn();
+$spawn = new Spawn();
 
 $files = new RecursiveDirectoryIterator('/path/to/images');
 $files = new RecursiveIteratorIterator($files);
 
-$concurrent->closures($files, function(SplFileInfo $file) {
+$spawn->closures($files, function(SplFileInfo $file) {
     // upload this file
 })
 ->start();
@@ -47,10 +47,10 @@ Each closure is executed in isolation using the [PhpProcess](http://symfony.com/
 ### Spawn a single isolated closure
 
 ``` php
-$concurrent = new Spawn();
+$spawn = new Spawn();
 $sum = 3;
 
-$processes = $concurrent
+$processes = $spawn
     ->spawn(["super", 120], function($prefix, $number) use ($sum) {
         echo $prefix." heavy routine";
         return $number+$sum;
@@ -69,7 +69,7 @@ echo $processes->getOutput(); // "super heavy routine"
 ``` php
 $collaborator = new YourCollaborator(1,2,3,4);
 
-$concurrent
+$spawn
     ->closures(range(1, 7), function($input) use ($collaborator) {
         echo "this is the echo";
         $collaborator->doSomething();

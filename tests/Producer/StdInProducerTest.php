@@ -25,7 +25,7 @@ line
 line
 line
 EOF;
-        $createTmpFileName = tempnam(sys_get_temp_dir(), 'concurrent_test');
+        $createTmpFileName = tempnam(sys_get_temp_dir(), 'spawn_test');
         file_put_contents($createTmpFileName, $buffer);
 
         $queue = $this->getMock('\Liuggio\Spawn\Queue\QueueInterface');

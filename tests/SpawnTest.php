@@ -12,8 +12,8 @@ class SpawnTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldExecuteASimpleCallableAndGetTheOutputAndReturnValueCorrectly()
     {
-        $concurrent = new Spawn();
-        $concurrent
+        $spawn = new Spawn();
+        $spawn
             ->closures(range(1, 7), function ($input) {
                 echo 'this is the echo';
                 $return = new \stdClass();
@@ -34,8 +34,8 @@ class SpawnTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldExecuteAConcurrentProcesses()
     {
-        $concurrent = new Spawn();
-        $concurrent
+        $spawn = new Spawn();
+        $spawn
             ->processes([1], $template = "echo -n '{}';")
             ->onCompleted(function (Process $process) {
                 $this->assertEquals(null, $process->getErrorOutput());
@@ -49,8 +49,8 @@ class SpawnTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldExecuteAndGetPartialBuffer()
     {
-        $concurrent = new Spawn();
-        $concurrent
+        $spawn = new Spawn();
+        $spawn
             ->processes([1], $template = "echo -n '{}';sleep 2;echo -n done")
             ->onPartialOutput(function (Process $process) {
                 $this->assertEquals(null, $process->getErrorOutput());
@@ -82,8 +82,8 @@ class SpawnTest extends \PHPUnit_Framework_TestCase
             return $sum;
         };
 
-        $concurrent = new Spawn();
-        $process = $concurrent->spawn(10, $sumAndPrint);
+        $spawn = new Spawn();
+        $process = $spawn->spawn(10, $sumAndPrint);
         $process->wait();
         $this->assertEquals(null, $process->getErrorOutput());
         $this->assertEquals(65, $process->getReturnValue());
