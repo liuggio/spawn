@@ -1,8 +1,8 @@
 <?php
 
-namespace Liuggio\Concurrent\Queue;
+namespace Liuggio\Spawn\Queue;
 
-use Liuggio\Concurrent\Exception\TheQueueMustNotBeFrozenToEnqueueException;
+use Liuggio\Spawn\Exception\TheQueueMustNotBeFrozenToEnqueueException;
 
 class SplQueue extends \SplQueue implements QueueInterface
 {

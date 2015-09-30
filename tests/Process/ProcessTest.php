@@ -1,9 +1,9 @@
 <?php
 
-namespace Liuggio\Concurrent\Process;
+namespace Liuggio\Spawn\Process;
 
-use Liuggio\Concurrent\Process\Channel\Channel;
-use Liuggio\Concurrent\CommandLine;
+use Liuggio\Spawn\Process\Channel\Channel;
+use Liuggio\Spawn\CommandLine;
 
 class ProcessTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +15,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
         $assertionCommandLine = 'bin/phpunit fileA';
         $channelNumber = 2;
         $channel = Channel::createAWaiting($channelNumber, 10);
-        $process = $this->getMockBuilder('\Liuggio\Concurrent\Process\Process')
+        $process = $this->getMockBuilder('\Liuggio\Spawn\Process\Process')
             ->disableOriginalConstructor()
             ->getMock();
         $channel = $channel->assignToAProcess($process);
@@ -26,7 +26,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
             $envs
         );
 
-        $this->assertInstanceOf('\Liuggio\Concurrent\Process\Process', $process);
+        $this->assertInstanceOf('\Liuggio\Spawn\Process\Process', $process);
         $this->assertEquals('bin/phpunit fileA', $process->getCommandLine());
         $this->assertEquals(array(
             0 => 'ENV_TEST_CHANNEL=2',

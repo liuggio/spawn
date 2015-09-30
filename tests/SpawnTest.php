@@ -1,18 +1,18 @@
 <?php
 
-namespace Liuggio\Concurrent;
+namespace Liuggio\Spawn;
 
-use Liuggio\Concurrent\Process\ClosureProcess;
-use Liuggio\Concurrent\Process\Process;
+use Liuggio\Spawn\Process\ClosureProcess;
+use Liuggio\Spawn\Process\Process;
 
-class ConcurrentTest extends \PHPUnit_Framework_TestCase
+class SpawnTest extends \PHPUnit_Framework_TestCase
 {
     /**
      *  @test
      */
     public function shouldExecuteASimpleCallableAndGetTheOutputAndReturnValueCorrectly()
     {
-        $concurrent = new Concurrent();
+        $concurrent = new Spawn();
         $concurrent
             ->closures(range(1, 7), function ($input) {
                 echo 'this is the echo';
@@ -34,7 +34,7 @@ class ConcurrentTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldExecuteAConcurrentProcesses()
     {
-        $concurrent = new Concurrent();
+        $concurrent = new Spawn();
         $concurrent
             ->processes([1], $template = "echo -n '{}';")
             ->onCompleted(function (Process $process) {
@@ -49,7 +49,7 @@ class ConcurrentTest extends \PHPUnit_Framework_TestCase
      */
     public function shouldExecuteAndGetPartialBuffer()
     {
-        $concurrent = new Concurrent();
+        $concurrent = new Spawn();
         $concurrent
             ->processes([1], $template = "echo -n '{}';sleep 2;echo -n done")
             ->onPartialOutput(function (Process $process) {
@@ -82,7 +82,7 @@ class ConcurrentTest extends \PHPUnit_Framework_TestCase
             return $sum;
         };
 
-        $concurrent = new Concurrent();
+        $concurrent = new Spawn();
         $process = $concurrent->spawn(10, $sumAndPrint);
         $process->wait();
         $this->assertEquals(null, $process->getErrorOutput());

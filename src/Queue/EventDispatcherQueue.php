@@ -1,12 +1,12 @@
 <?php
 
-namespace Liuggio\Concurrent\Queue;
+namespace Liuggio\Spawn\Queue;
 
-use Liuggio\Concurrent\Event\FrozenQueueEvent;
-use Liuggio\Concurrent\Event\InputLineDequeuedEvent;
-use Liuggio\Concurrent\Event\InputLineEnqueuedEvent;
-use Liuggio\Concurrent\Event\EventsName;
-use Liuggio\Concurrent\Event\EmptiedQueueEvent;
+use Liuggio\Spawn\Event\FrozenQueueEvent;
+use Liuggio\Spawn\Event\InputLineDequeuedEvent;
+use Liuggio\Spawn\Event\InputLineEnqueuedEvent;
+use Liuggio\Spawn\Event\EventsName;
+use Liuggio\Spawn\Event\EmptiedQueueEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

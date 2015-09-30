@@ -1,8 +1,8 @@
 <?php
 
-namespace Liuggio\Concurrent\Process;
+namespace Liuggio\Spawn\Process;
 
-use Liuggio\Concurrent\CommandLine;
+use Liuggio\Spawn\CommandLine;
 use Symfony\Component\Process\Process as BaseProcess;
 
 class Process extends BaseProcess

@@ -1,12 +1,12 @@
 <?php
 
-namespace Liuggio\Concurrent\Consumer;
+namespace Liuggio\Spawn\Consumer;
 
-use Liuggio\Concurrent\Event\EventsName;
-use Liuggio\Concurrent\Event\ProcessStartedEvent;
-use Liuggio\Concurrent\Event\ChannelIsWaitingEvent;
-use Liuggio\Concurrent\Process\ProcessFactoryInterface;
-use Liuggio\Concurrent\Queue\QueueInterface;
+use Liuggio\Spawn\Event\EventsName;
+use Liuggio\Spawn\Event\ProcessStartedEvent;
+use Liuggio\Spawn\Event\ChannelIsWaitingEvent;
+use Liuggio\Spawn\Process\ProcessFactoryInterface;
+use Liuggio\Spawn\Queue\QueueInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ConsumerListener

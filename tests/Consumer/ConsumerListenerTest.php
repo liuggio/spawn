@@ -1,10 +1,10 @@
 <?php
 
-namespace Liuggio\Concurrent\Consumer;
+namespace Liuggio\Spawn\Consumer;
 
-use Liuggio\Concurrent\CommandLine;
-use Liuggio\Concurrent\Event\ChannelIsWaitingEvent;
-use Liuggio\Concurrent\Process\Channel\Channel;
+use Liuggio\Spawn\CommandLine;
+use Liuggio\Spawn\Event\ChannelIsWaitingEvent;
+use Liuggio\Spawn\Process\Channel\Channel;
 
 class ConsumerListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,18 +13,18 @@ class ConsumerListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function onChannelWaitABeforeCommandLineShouldExecuteANewProcess()
     {
-        $process = $this->getMockBuilder('\Liuggio\Concurrent\Process\Process')
+        $process = $this->getMockBuilder('\Liuggio\Spawn\Process\Process')
             ->disableOriginalConstructor()
             ->getMock();
 
         $channel = Channel::createAWaiting(3, 5);
 
-        $queue = $this->getMock('\Liuggio\Concurrent\Queue\QueueInterface');
+        $queue = $this->getMock('\Liuggio\Spawn\Queue\QueueInterface');
         $queue->expects($this->once())
             ->method('dequeue')
             ->willReturn(10);
 
-        $processFactory = $this->getMock('\Liuggio\Concurrent\Process\ProcessFactory');
+        $processFactory = $this->getMock('\Liuggio\Spawn\Process\ProcessFactory');
         $processFactory->expects($this->once())
             ->method('create')
             ->with($this->equalTo($channel))

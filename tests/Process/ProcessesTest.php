@@ -1,8 +1,8 @@
 <?php
 
-namespace Liuggio\Concurrent\Process;
+namespace Liuggio\Spawn\Process;
 
-use Liuggio\Concurrent\Event\EventsName;
+use Liuggio\Spawn\Event\EventsName;
 
 class ProcessesTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,9 +29,9 @@ class ProcessesTest extends \PHPUnit_Framework_TestCase
 
         $processes = new Processes($ed, null, 2);
 
-        $ev = $this->getMock('\Liuggio\Concurrent\Event\FrozenQueueEvent');
+        $ev = $this->getMock('\Liuggio\Spawn\Event\FrozenQueueEvent');
         $processes->onFrozenQueue($ev);
-        $ev2 = $this->getMock('\Liuggio\Concurrent\Event\EmptiedQueueEvent');
+        $ev2 = $this->getMock('\Liuggio\Spawn\Event\EmptiedQueueEvent');
         $processes->onQueueEmptied($ev2);
 
         $processes->loop();

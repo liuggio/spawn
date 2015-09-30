@@ -6,7 +6,7 @@ in order to improve the performance when you have to execute a bunch of commands
 (like unit-tests/functional-tests/CS fixes/files handling) in your 'dev' environment.
 
 ``` php
-$concurrent = new Concurrent();
+$concurrent = new Spawn();
 $concurrent
     ->processes(range(1,10), "printenv > '/tmp/envs_{}{p}.log';")
     ->onCompleted(function(Process $singleProcess){ /* print stats */});
@@ -31,7 +31,7 @@ Feed an iterator and it will break the job into multiple php scripts and spread 
 In order to improve performances, the number of processes is equal to the number of computer's cores.
 
 ``` php
-$concurrent = new Concurrent();
+$concurrent = new Spawn();
 
 $files = new RecursiveDirectoryIterator('/path/to/images');
 $files = new RecursiveIteratorIterator($files);
@@ -47,7 +47,7 @@ Each closure is executed in isolation using the [PhpProcess](http://symfony.com/
 ### Spawn a single isolated closure
 
 ``` php
-$concurrent = new Concurrent();
+$concurrent = new Spawn();
 $sum = 3;
 
 $processes = $concurrent
@@ -115,5 +115,5 @@ MIT License see the [License](./LICENSE).
 
 ### More fun?
 
-- see how the [travis.yml](./.travis.yml#16) run test suite with [concurrent_tests](./tests/concurrent_tests.php).
+- see how the [travis.yml](./.travis.yml#16) run test suite with [spawn_tests](./tests/spawn_tests.php).
 - have fun with [fastest](https://github.com/liuggio/fastest)

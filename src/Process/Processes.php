@@ -1,18 +1,18 @@
 <?php
 
-namespace Liuggio\Concurrent\Process;
+namespace Liuggio\Spawn\Process;
 
-use Liuggio\Concurrent\Process\Channel\Channels;
-use Liuggio\Concurrent\Event\ChannelIsWaitingEvent;
-use Liuggio\Concurrent\Event\EmptiedQueueEvent;
-use Liuggio\Concurrent\Event\EventsName;
-use Liuggio\Concurrent\Event\FrozenQueueEvent;
-use Liuggio\Concurrent\Event\LoopCompletedEvent;
-use Liuggio\Concurrent\Event\LoopStartedEvent;
-use Liuggio\Concurrent\Event\ProcessCompletedEvent;
-use Liuggio\Concurrent\Event\ProcessGeneratedBufferEvent;
-use Liuggio\Concurrent\Event\ProcessStartedEvent;
-use Liuggio\Concurrent\ProcessorCounter;
+use Liuggio\Spawn\Process\Channel\Channels;
+use Liuggio\Spawn\Event\ChannelIsWaitingEvent;
+use Liuggio\Spawn\Event\EmptiedQueueEvent;
+use Liuggio\Spawn\Event\EventsName;
+use Liuggio\Spawn\Event\FrozenQueueEvent;
+use Liuggio\Spawn\Event\LoopCompletedEvent;
+use Liuggio\Spawn\Event\LoopStartedEvent;
+use Liuggio\Spawn\Event\ProcessCompletedEvent;
+use Liuggio\Spawn\Event\ProcessGeneratedBufferEvent;
+use Liuggio\Spawn\Event\ProcessStartedEvent;
+use Liuggio\Spawn\ProcessorCounter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Process\Process;

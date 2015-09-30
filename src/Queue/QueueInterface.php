@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Concurrent\Queue;
+namespace Liuggio\Spawn\Queue;
 
 interface QueueInterface
 {

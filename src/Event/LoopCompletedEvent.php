@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Concurrent\Event;
+namespace Liuggio\Spawn\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Stopwatch\StopwatchEvent;

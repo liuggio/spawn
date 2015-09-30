@@ -1,8 +1,8 @@
 <?php
 
-namespace Liuggio\Concurrent\Process;
+namespace Liuggio\Spawn\Process;
 
-use Liuggio\Concurrent\Process\Channel\Channel;
+use Liuggio\Spawn\Process\Channel\Channel;
 
 interface ProcessFactoryInterface
 {

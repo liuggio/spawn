@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Concurrent;
+namespace Liuggio\Spawn;
 
 class ProcessorCounterTest extends \PHPUnit_Framework_TestCase
 {

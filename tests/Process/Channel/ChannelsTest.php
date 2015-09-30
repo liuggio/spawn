@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Concurrent\Process\Channel;
+namespace Liuggio\Spawn\Process\Channel;
 
 class ChannelsTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +20,7 @@ class ChannelsTest extends \PHPUnit_Framework_TestCase
     public function shouldGetAllThe4EmptyChannels()
     {
         $channels = Channels::createWaiting(5);
-        $process = $this->getMockBuilder('\Liuggio\Concurrent\Process\Process')
+        $process = $this->getMockBuilder('\Liuggio\Spawn\Process\Process')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -38,7 +38,7 @@ class ChannelsTest extends \PHPUnit_Framework_TestCase
         $channels = Channels::createWaiting(5);
 
         foreach ($channels->getWaitingChannels() as $channel) {
-            $process = $this->getMockBuilder('\Liuggio\Concurrent\Process\Process')
+            $process = $this->getMockBuilder('\Liuggio\Spawn\Process\Process')
                 ->disableOriginalConstructor()
                 ->getMock();
             $channels->assignAProcess($channel, $process);

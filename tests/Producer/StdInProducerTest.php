@@ -1,16 +1,16 @@
 <?php
 
-namespace Liuggio\Concurrent\Producer;
+namespace Liuggio\Spawn\Producer;
 
 class StdInProducerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @expectedException \Liuggio\Concurrent\Exception\StdInMustBeAValidResourceException
+     * @expectedException \Liuggio\Spawn\Exception\StdInMustBeAValidResourceException
      */
     public function shouldRaiseAnExceptionIfInputHasError()
     {
-        $queue = $this->getMock('\Liuggio\Concurrent\Queue\QueueInterface');
+        $queue = $this->getMock('\Liuggio\Spawn\Queue\QueueInterface');
         $sut = new StdInProducer('xyz');
         $sut->produce($queue);
     }
@@ -28,7 +28,7 @@ EOF;
         $createTmpFileName = tempnam(sys_get_temp_dir(), 'concurrent_test');
         file_put_contents($createTmpFileName, $buffer);
 
-        $queue = $this->getMock('\Liuggio\Concurrent\Queue\QueueInterface');
+        $queue = $this->getMock('\Liuggio\Spawn\Queue\QueueInterface');
         $queue
             ->expects($this->exactly(3))
             ->method('enqueue');
@@ -50,8 +50,8 @@ EOF;
         $bootstrapFile = realpath(__DIR__.'/../../vendor/autoload.php');
         $code = '
             require "'.$bootstrapFile.'";
-            $queue = new \Liuggio\Concurrent\Queue\SplQueue();
-            $producer = new \Liuggio\Concurrent\Producer\StdInProducer();
+            $queue = new \Liuggio\Spawn\Queue\SplQueue();
+            $producer = new \Liuggio\Spawn\Producer\StdInProducer();
             $producer->produce($queue);
             try {
                 while($value = $queue->dequeue()) {

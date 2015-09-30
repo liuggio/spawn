@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Concurrent\Exception;
+namespace Liuggio\Spawn\Exception;
 
 class TheQueueMustNotBeFrozenToEnqueueException extends \Exception
 {

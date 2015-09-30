@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Concurrent\Event;
+namespace Liuggio\Spawn\Event;
 
 final class InputLineEnqueuedEvent extends AbstractInputLineEvent
 {

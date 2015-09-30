@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Concurrent;
+namespace Liuggio\Spawn;
 
 /**
  *  Number of processors seen by the OS and used for processes scheduling.
