@@ -1,9 +1,9 @@
 <?php
 
-namespace Liuggio\Concurrent\Process;
+namespace Liuggio\Spawn\Process;
 
-use Liuggio\Concurrent\Process\Channel\Channel;
-use Liuggio\Concurrent\CommandLine;
+use Liuggio\Spawn\Process\Channel\Channel;
+use Liuggio\Spawn\CommandLine;
 
 class ProcessFactory implements ProcessFactoryInterface
 {

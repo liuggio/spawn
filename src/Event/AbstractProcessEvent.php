@@ -1,9 +1,9 @@
 <?php
 
-namespace Liuggio\Concurrent\Event;
+namespace Liuggio\Spawn\Event;
 
-use Liuggio\Concurrent\Process\ClosureProcess;
-use Liuggio\Concurrent\Process\Process;
+use Liuggio\Spawn\Process\ClosureProcess;
+use Liuggio\Spawn\Process\Process;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractProcessEvent extends Event

@@ -1,8 +1,8 @@
 <?php
 
-namespace Liuggio\Concurrent\Process\Channel;
+namespace Liuggio\Spawn\Process\Channel;
 
-use Liuggio\Concurrent\Process\Process;
+use Liuggio\Spawn\Process\Process;
 
 class Channels
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Liuggio\Concurrent\Process\Channel;
+namespace Liuggio\Spawn\Process\Channel;
 
-use Liuggio\Concurrent\Process\ClosureProcess;
-use Liuggio\Concurrent\Process\Process;
+use Liuggio\Spawn\Process\ClosureProcess;
+use Liuggio\Spawn\Process\Process;
 
 class Channel
 {

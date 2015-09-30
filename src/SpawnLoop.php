@@ -1,18 +1,18 @@
 <?php
 
-namespace Liuggio\Concurrent;
+namespace Liuggio\Spawn;
 
-use Liuggio\Concurrent\Event\EmptiedQueueEvent;
-use Liuggio\Concurrent\Event\EventsName;
-use Liuggio\Concurrent\Event\LoopCompletedEvent;
-use Liuggio\Concurrent\Event\ProcessCompletedEvent;
-use Liuggio\Concurrent\Event\ProcessGeneratedBufferEvent;
-use Liuggio\Concurrent\Exception\LoopAlreadyStartedException;
-use Liuggio\Concurrent\Process\Processes;
+use Liuggio\Spawn\Event\EmptiedQueueEvent;
+use Liuggio\Spawn\Event\EventsName;
+use Liuggio\Spawn\Event\LoopCompletedEvent;
+use Liuggio\Spawn\Event\ProcessCompletedEvent;
+use Liuggio\Spawn\Event\ProcessGeneratedBufferEvent;
+use Liuggio\Spawn\Exception\LoopAlreadyStartedException;
+use Liuggio\Spawn\Process\Processes;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class ConcurrentLoop
+class SpawnLoop
 {
     /** @var EventDispatcherInterface */
     private $eventDispatcher;

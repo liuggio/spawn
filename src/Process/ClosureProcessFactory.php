@@ -1,9 +1,9 @@
 <?php
 
-namespace Liuggio\Concurrent\Process;
+namespace Liuggio\Spawn\Process;
 
-use Liuggio\Concurrent\CommandLine;
-use Liuggio\Concurrent\Process\Channel\Channel;
+use Liuggio\Spawn\CommandLine;
+use Liuggio\Spawn\Process\Channel\Channel;
 use SuperClosure\Serializer;
 
 class ClosureProcessFactory implements ProcessFactoryInterface
@@ -67,7 +67,7 @@ class ClosureProcessFactory implements ProcessFactoryInterface
 
             return sprintf('<?php
 require_once \'%s\';
-$c = \Liuggio\Concurrent\Process\ClosureReturnValue::start();
+$c = \Liuggio\Spawn\Process\ClosureReturnValue::start();
 $s = new \SuperClosure\Serializer();
 $fn = $s->unserialize(unserialize(base64_decode("%s")));
 $args = unserialize(base64_decode("%s"));

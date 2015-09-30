@@ -1,26 +1,26 @@
 <?php
 
-namespace Liuggio\Concurrent;
+namespace Liuggio\Spawn;
 
-use Liuggio\Concurrent\Consumer\ConsumerListener;
-use Liuggio\Concurrent\Event\EventsName;
-use Liuggio\Concurrent\Process\ClosureProcess;
-use Liuggio\Concurrent\Process\Channel\Channel;
-use Liuggio\Concurrent\Process\ClosureProcessFactory;
-use Liuggio\Concurrent\Process\Processes;
-use Liuggio\Concurrent\Process\ProcessFactory;
-use Liuggio\Concurrent\Queue\EventDispatcherQueue;
-use Liuggio\Concurrent\Queue\QueueInterface;
+use Liuggio\Spawn\Consumer\ConsumerListener;
+use Liuggio\Spawn\Event\EventsName;
+use Liuggio\Spawn\Process\ClosureProcess;
+use Liuggio\Spawn\Process\Channel\Channel;
+use Liuggio\Spawn\Process\ClosureProcessFactory;
+use Liuggio\Spawn\Process\Processes;
+use Liuggio\Spawn\Process\ProcessFactory;
+use Liuggio\Spawn\Queue\EventDispatcherQueue;
+use Liuggio\Spawn\Queue\QueueInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class Concurrent
+class Spawn
 {
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
     /**
-     * Concurrent constructor.
+     * Spawn constructor.
      *
      * @param EventDispatcherInterface|null $eventDispatcher
      * @param null|string                   $autoloadFile
@@ -41,8 +41,8 @@ class Concurrent
      * @param int|float|null                 $pollingTime
      * @param int|null                       $forceToNChannels
      *
-     * @return ConcurrentLoop
-     *                        *
+     * @return SpawnLoop
+     *                   *
      *
      * @api
      */
@@ -57,11 +57,11 @@ class Concurrent
         $this->addConsumerToListener($consumer);
         $data->freeze();
 
-        return new ConcurrentLoop($processes, $this->eventDispatcher);
+        return new SpawnLoop($processes, $this->eventDispatcher);
     }
 
     /**
-     * Creates the ConcurrentLoop for isolated Processes.
+     * Creates the SpawnLoop for isolated Processes.
      *
      * @param \Iterator|array|QueueInterface $data
      * @param string                         $template
@@ -69,7 +69,7 @@ class Concurrent
      * @param int|null                       $forceToNChannels
      * @param string|null                    $cwd
      *
-     * @return ConcurrentLoop
+     * @return SpawnLoop
      *
      * @api
      */
@@ -82,7 +82,7 @@ class Concurrent
         $this->addConsumerToListener($consumer);
         $data->freeze();
 
-        return new ConcurrentLoop($processes, $this->eventDispatcher);
+        return new SpawnLoop($processes, $this->eventDispatcher);
     }
 
     /**

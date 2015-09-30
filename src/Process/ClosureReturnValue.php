@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Concurrent\Process;
+namespace Liuggio\Spawn\Process;
 
 use Symfony\Component\Stopwatch\Stopwatch;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Liuggio\Concurrent\Producer;
+namespace Liuggio\Spawn\Producer;
 
-use Liuggio\Concurrent\Queue\QueueInterface;
+use Liuggio\Spawn\Queue\QueueInterface;
 
 interface ProducerInterface
 {

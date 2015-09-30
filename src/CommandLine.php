@@ -1,6 +1,6 @@
 <?php
 
-namespace Liuggio\Concurrent;
+namespace Liuggio\Spawn;
 
 /**
  * Value Object for the Command to be executed in parallel.

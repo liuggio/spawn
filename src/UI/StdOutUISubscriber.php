@@ -1,10 +1,10 @@
 <?php
 
-namespace Liuggio\Concurrent\UI;
+namespace Liuggio\Spawn\UI;
 
-use Liuggio\Concurrent\Event\EventsName;
-use Liuggio\Concurrent\Event\ProcessCompletedEvent;
-use Liuggio\Concurrent\Event\ProcessGeneratedBufferEvent;
+use Liuggio\Spawn\Event\EventsName;
+use Liuggio\Spawn\Event\ProcessCompletedEvent;
+use Liuggio\Spawn\Event\ProcessGeneratedBufferEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class StdOutUISubscriber implements EventSubscriberInterface

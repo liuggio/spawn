@@ -1,8 +1,8 @@
 <?php
 
-namespace Liuggio\Concurrent\Event;
+namespace Liuggio\Spawn\Event;
 
-use Liuggio\Concurrent\Process\Channel\Channel;
+use Liuggio\Spawn\Process\Channel\Channel;
 use Symfony\Component\EventDispatcher\Event;
 
 class ChannelIsWaitingEvent extends Event

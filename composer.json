@@ -1,5 +1,5 @@
 {
-    "name": "liuggio/concurrent",
+    "name": "liuggio/spawn",
     "description": "Concurrent processing of closures and commands in PHP with ease.",
     "license": "MIT",
     "authors": [
@@ -23,10 +23,14 @@
         "bin-dir": "bin/"
     },
     "autoload": {
-        "psr-4": {"Liuggio\\Concurrent\\":["src"]}
+        "psr-4": {
+            "Liuggio\\Spawn\\": "src"
+        }
     },
     "autoload-dev": {
-        "psr-4": {"Liuggio\\Concurrent\\":"tests" }
+        "psr-4": {
+            "Liuggio\\Spawn\\": "tests"
+        }
     },
     "extra": {
         "branch-alias": {

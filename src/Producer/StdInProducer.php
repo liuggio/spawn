@@ -1,9 +1,9 @@
 <?php
 
-namespace Liuggio\Concurrent\Producer;
+namespace Liuggio\Spawn\Producer;
 
-use Liuggio\Concurrent\Exception\StdInMustBeAValidResourceException;
-use Liuggio\Concurrent\Queue\QueueInterface;
+use Liuggio\Spawn\Exception\StdInMustBeAValidResourceException;
+use Liuggio\Spawn\Queue\QueueInterface;
 
 class StdInProducer implements ProducerInterface
 {
