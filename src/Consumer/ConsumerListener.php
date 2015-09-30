@@ -2,9 +2,9 @@
 
 namespace Liuggio\Spawn\Consumer;
 
+use Liuggio\Spawn\Event\ChannelIsWaitingEvent;
 use Liuggio\Spawn\Event\EventsName;
 use Liuggio\Spawn\Event\ProcessStartedEvent;
-use Liuggio\Spawn\Event\ChannelIsWaitingEvent;
 use Liuggio\Spawn\Process\ProcessFactoryInterface;
 use Liuggio\Spawn\Queue\QueueInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

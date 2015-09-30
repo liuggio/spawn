@@ -2,8 +2,8 @@
 
 namespace Liuggio\Spawn\Process;
 
-use Liuggio\Spawn\Process\Channel\Channel;
 use Liuggio\Spawn\CommandLine;
+use Liuggio\Spawn\Process\Channel\Channel;
 
 class ProcessTest extends \PHPUnit_Framework_TestCase
 {

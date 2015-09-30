@@ -2,7 +2,6 @@
 
 namespace Liuggio\Spawn\Process;
 
-use Liuggio\Spawn\Process\Channel\Channels;
 use Liuggio\Spawn\Event\ChannelIsWaitingEvent;
 use Liuggio\Spawn\Event\EmptiedQueueEvent;
 use Liuggio\Spawn\Event\EventsName;
@@ -12,6 +11,7 @@ use Liuggio\Spawn\Event\LoopStartedEvent;
 use Liuggio\Spawn\Event\ProcessCompletedEvent;
 use Liuggio\Spawn\Event\ProcessGeneratedBufferEvent;
 use Liuggio\Spawn\Event\ProcessStartedEvent;
+use Liuggio\Spawn\Process\Channel\Channels;
 use Liuggio\Spawn\ProcessorCounter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

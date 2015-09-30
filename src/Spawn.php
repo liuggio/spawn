@@ -4,8 +4,8 @@ namespace Liuggio\Spawn;
 
 use Liuggio\Spawn\Consumer\ConsumerListener;
 use Liuggio\Spawn\Event\EventsName;
-use Liuggio\Spawn\Process\ClosureProcess;
 use Liuggio\Spawn\Process\Channel\Channel;
+use Liuggio\Spawn\Process\ClosureProcess;
 use Liuggio\Spawn\Process\ClosureProcessFactory;
 use Liuggio\Spawn\Process\Processes;
 use Liuggio\Spawn\Process\ProcessFactory;

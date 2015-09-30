@@ -2,11 +2,11 @@
 
 namespace Liuggio\Spawn\Queue;
 
+use Liuggio\Spawn\Event\EmptiedQueueEvent;
+use Liuggio\Spawn\Event\EventsName;
 use Liuggio\Spawn\Event\FrozenQueueEvent;
 use Liuggio\Spawn\Event\InputLineDequeuedEvent;
 use Liuggio\Spawn\Event\InputLineEnqueuedEvent;
-use Liuggio\Spawn\Event\EventsName;
-use Liuggio\Spawn\Event\EmptiedQueueEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
