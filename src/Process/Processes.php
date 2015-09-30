@@ -52,12 +52,12 @@ class Processes implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array(
-            EventsName::QUEUE_IS_FROZEN => array('onFrozenQueue', 100),
-            EventsName::QUEUE_IS_EMPTY => array('onQueueEmptied', 100),
-            EventsName::PROCESS_STARTED => array('onProcessStarted', 100),
-            EventsName::PROCESS_COMPLETED => array('onProcessCompleted', 100),
-        );
+        return [
+            EventsName::QUEUE_IS_FROZEN => ['onFrozenQueue', 100],
+            EventsName::QUEUE_IS_EMPTY => ['onQueueEmptied', 100],
+            EventsName::PROCESS_STARTED => ['onProcessStarted', 100],
+            EventsName::PROCESS_COMPLETED => ['onProcessCompleted', 100],
+        ];
     }
 
     public function onFrozenQueue(FrozenQueueEvent $event)

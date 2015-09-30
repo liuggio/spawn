@@ -34,14 +34,14 @@ class ProcessEnvironment
 
     public function exportToEnvsArray()
     {
-        return array(
+        return [
             self::ENV_TEST_CHANNEL.'='.$this->channel->getId(),
             self::ENV_TEST_CHANNEL_READABLE.'='.$this->getReadableChannel(),
             self::ENV_TEST_CHANNELS_NUMBER.'='.$this->getChannelsNumber(),
             self::ENV_TEST_ARGUMENT.'='.$this->getArguments(),
             self::ENV_TEST_INCREMENTAL_NUMBER.'='.$this->getIncrementalNumber(),
             self::ENV_TEST_IS_FIRST_ON_CHANNEL.'='.(int) $this->isTheFirstCommandOnChannel(),
-        );
+        ];
     }
 
     /**

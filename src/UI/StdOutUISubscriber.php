@@ -11,15 +11,15 @@ class StdOutUISubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
-        return array(
-           // EventsName::INPUT_LINE_ENQUEUED => array('onInputLineEnqueued', 100),
-           // EventsName::INPUT_LINE_DEQUEUED => array('onInputLineDequeued', 100),
-            EventsName::QUEUE_IS_FROZEN => array('onFrozenQueue', 100),
-           // EventsName::QUEUE_IS_EMPTY => array('onQueueEmptied', 100),
-            EventsName::PROCESS_STARTED => array('onProcessStarted', 100),
-            EventsName::PROCESS_COMPLETED => array('onProcessCompleted', 100),
-           // EventsName::PROCESS_GENERATED_BUFFER => array('onGeneratedBuffer', 100),
-        );
+        return [
+            // EventsName::INPUT_LINE_ENQUEUED => ['onInputLineEnqueued', 100],
+            // EventsName::INPUT_LINE_DEQUEUED => ['onInputLineDequeued', 100],
+            EventsName::QUEUE_IS_FROZEN => ['onFrozenQueue', 100],
+            // EventsName::QUEUE_IS_EMPTY => ['onQueueEmptied', 100],
+            EventsName::PROCESS_STARTED => ['onProcessStarted', 100],
+            EventsName::PROCESS_COMPLETED => ['onProcessCompleted', 100],
+            // EventsName::PROCESS_GENERATED_BUFFER => ['onGeneratedBuffer', 100],
+        ];
     }
 
     public function __call($name, $arguments)

@@ -60,7 +60,7 @@ class ClosureReturnValue
     {
         $value = unserialize(base64_decode($serialized));
         if (!$value || !is_array($value)) {
-            $value = array(null, null);
+            $value = [null, null];
         }
 
         return new self($value[0], $value[1], $value[2], $value[3], $value[4]);

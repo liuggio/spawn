@@ -46,7 +46,7 @@ class SplQueue extends \SplQueue implements QueueInterface
      */
     public function randomize()
     {
-        $randomizedArray = array();
+        $randomizedArray = [];
         for ($this->rewind(); $this->valid(); $this->next()) {
             $randomizedArray[] = $this->current();
         }
