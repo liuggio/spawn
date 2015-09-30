@@ -7,15 +7,13 @@ use Liuggio\Spawn\Exception\TheQueueMustNotBeFrozenToEnqueueException;
 class SplQueue extends \SplQueue implements QueueInterface
 {
     /** @var  bool */
-    private $isFrozen;
+    private $isFrozen = false;
 
     /**
      * {@inheritdoc}
      */
     public function __construct($queue = null)
     {
-        $this->isFrozen = false;
-
         parent::setIteratorMode(\SplDoublyLinkedList::IT_MODE_FIFO & \SplDoublyLinkedList::IT_MODE_DELETE);
         if (null !== $queue) {
             foreach ($queue as $item) {

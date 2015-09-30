@@ -19,13 +19,12 @@ class SpawnLoop
     /** @var Processes */
     private $processes;
     /** @var bool */
-    private $loopRunning;
+    private $loopRunning = false;
 
     public function __construct(Processes $processes, EventDispatcherInterface $eventDispatcher = null)
     {
         $this->processes = $processes;
         $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
-        $this->loopRunning = false;
     }
 
     /**

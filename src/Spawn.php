@@ -28,8 +28,6 @@ class Spawn
     public function __construct(EventDispatcherInterface $eventDispatcher = null, $autoloadFile = null)
     {
         $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
-        $this->processNeedToBeInitialized = true;
-        $this->loopRunning = false;
         $this->autoloadFile = $autoloadFile ?: $this->findAutoloadFilename();
     }
 

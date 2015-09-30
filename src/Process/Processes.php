@@ -31,9 +31,11 @@ class Processes implements EventSubscriberInterface
     /** @var Channels */
     private $channels;
     /** @var bool */
-    private $queueIsEmpty;
+    private $queueIsEmpty = false;
     /** @var bool */
-    private $queueIsFrozen;
+    private $queueIsFrozen = false;
+    /** @var int */
+    private $exitCode = 0;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -45,9 +47,6 @@ class Processes implements EventSubscriberInterface
         $this->pollingTime = $pollingTime ?: 200;
         $this->parallelChannels = $this->calculateChannels($forceToUseNChannels);
         $this->exitCodeStrategy = $this->createExitStrategyCallable($exitCodeStrategy);
-        $this->exitCode = 0;
-        $this->queueIsEmpty = false;
-        $this->queueIsFrozen = false;
         $this->channels = Channels::createWaiting($this->parallelChannels);
     }
 
@@ -94,7 +93,7 @@ class Processes implements EventSubscriberInterface
         $stopWatch->start('loop');
         $this->eventDispatcher->dispatch(EventsName::LOOP_STARTED, new LoopStartedEvent($this->parallelChannels));
         $this->notifyWaitingChannel($this->channels->getWaitingChannels());
-        while (!($this->queueIsFrozen && $this->queueIsEmpty && count($assignedChannels = $this->channels->getAssignedChannels()) < 1)) {
+        while (!($this->queueIsFrozen && $this->queueIsEmpty && count($this->channels->getAssignedChannels()) < 1)) {
             $this->checkTerminatedProcessOnChannels($this->channels->getAssignedChannels());
             usleep($this->pollingTime);
         }

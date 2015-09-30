@@ -14,8 +14,6 @@ class ClosureProcessFactory implements ProcessFactoryInterface
     private $fnSerializer;
     /** @var callable */
     private $templateEngine;
-    /** @var int */
-    private $processCounter;
     /** @var int|float|null */
     private $timeout;
 
@@ -23,7 +21,6 @@ class ClosureProcessFactory implements ProcessFactoryInterface
     {
         $this->autoload = $autoload;
         $this->fnSerializer = $fnSerializer ?: new Serializer();
-        $this->processCounter = 0;
         $this->templateEngine = $templateEngine ?: $this->createDefaultTemplateEngine($callable);
         $this->timeout = $timeout;
     }

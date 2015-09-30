@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class ConsumerListener
 {
     /** @var int */
-    private $processCounter;
+    private $processCounter = 0;
     /** @var QueueInterface */
     private $queue;
     /** @var EventDispatcherInterface */

@@ -9,14 +9,11 @@ class ProcessFactory implements ProcessFactoryInterface
 {
     /** @var Callable */
     private $templateEngine;
-    /** @var int */
-    private $processCounter;
     /** @var int|float|null */
     private $timeout;
 
     public function __construct(callable $templateEngine = null, $timeout = null)
     {
-        $this->processCounter = 0;
         $this->templateEngine = $templateEngine ?: $this->createDefaultTemplateEngine();
         $this->timeout = $timeout;
     }

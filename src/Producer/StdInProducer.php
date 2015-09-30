@@ -9,13 +9,12 @@ class StdInProducer implements ProducerInterface
 {
     /** @var string */
     private $stdIn;
-    /** @var resource */
-    private $resource;
+    /** @var resource|null */
+    private $resource = null;
 
     public function __construct($stdIn = 'php://stdin')
     {
         $this->stdIn = $stdIn;
-        $this->resource = null;
     }
 
     /**
