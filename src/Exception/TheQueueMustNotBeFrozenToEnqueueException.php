@@ -2,6 +2,6 @@
 
 namespace Liuggio\Spawn\Exception;
 
-class TheQueueMustNotBeFrozenToEnqueueException extends \Exception
+class TheQueueMustNotBeFrozenToEnqueueException extends AbstractRuntimeException
 {
 }
