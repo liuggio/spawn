@@ -29,6 +29,10 @@ class SpawnLoop
      */
     private $loopRunning = false;
 
+    /**
+     * @param Processes                     $processes
+     * @param EventDispatcherInterface|null $eventDispatcher
+     */
     public function __construct(Processes $processes, EventDispatcherInterface $eventDispatcher = null)
     {
         $this->processes = $processes;
