@@ -68,8 +68,8 @@ class Processes implements EventSubscriberInterface
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        $pollingTime = null,
-        $forceToUseNChannels = null,
+        $pollingTime = 0,
+        $forceToUseNChannels = 0,
         $exitCodeStrategy = null
     ) {
         $this->eventDispatcher = $eventDispatcher;

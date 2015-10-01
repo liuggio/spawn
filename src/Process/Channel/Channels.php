@@ -16,6 +16,7 @@ class Channels
      */
     private function __construct($channelsNumber)
     {
+        $channelsNumber = (int) $channelsNumber;
         for ($i = 0; $i < $channelsNumber; ++$i) {
             $channel = Channel::createAWaiting($i, $channelsNumber);
             $this->channels[$channel->getId()] = $channel;

@@ -52,8 +52,7 @@ class StdInProducer implements ProducerInterface
      */
     private function addLineIfNotEmpty(QueueInterface $queue, $line)
     {
-        $line = trim($line);
-        if (!empty($line)) {
+        if ($line = trim($line)) {
             $queue->enqueue($line);
         }
     }

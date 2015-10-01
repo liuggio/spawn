@@ -22,8 +22,8 @@ class Process extends BaseProcess
         CommandLine $commandLine,
         ProcessEnvironment $processEnvironment,
         $timeout = null,
-        $cwd = null)
-    {
+        $cwd = null
+    ) {
         $this->processEnvironment = $processEnvironment;
 
         parent::__construct((string) $commandLine, $cwd, $this->processEnvironment->exportToEnvsArray());

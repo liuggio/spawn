@@ -23,7 +23,7 @@ class EventDispatcherQueue extends SplQueue implements QueueInterface
      * @param EventDispatcherInterface|null $eventDispatcher
      * @param null|array                    $array
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher = null, $array = null)
+    public function __construct(EventDispatcherInterface $eventDispatcher = null, array $array = null)
     {
         $this->eventDispatcher = $eventDispatcher ?: new EventDispatcher();
         parent::__construct($array);

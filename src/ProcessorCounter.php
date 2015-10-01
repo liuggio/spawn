@@ -54,8 +54,7 @@ class ProcessorCounter
     private function readFromProcCPUInfo()
     {
         if ($this->os === 'Darwin') {
-            $processors = system('/usr/sbin/sysctl -n hw.physicalcpu');
-            if ($processors !== false && $processors) {
+            if ($processors = system('/usr/sbin/sysctl -n hw.physicalcpu')) {
                 return $processors;
             }
         } elseif ($this->os === 'Linux') {

@@ -37,7 +37,7 @@ class Channel
     {
         $this->channelId = $channelId;
         $this->channelsNumber = $channelsNumber;
-        $this->assignedProcessesCounter = $commandsCounter;
+        $this->assignedProcessesCounter = (int) $commandsCounter;
         $this->process = $process;
     }
 

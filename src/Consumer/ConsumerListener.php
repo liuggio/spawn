@@ -53,7 +53,6 @@ class ConsumerListener
         EventDispatcherInterface $eventDispatcher,
         ProcessFactoryInterface $processFactory,
         $template = null,
-        $this->processCounter = 0;
         $cwd = null
     ) {
         $this->queue = $queue;

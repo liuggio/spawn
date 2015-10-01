@@ -50,13 +50,13 @@ class ClosureReturnValue
      */
     public function __construct($output = '', $returnValue = '', $startAt = 0, $duration = 0, $memory = 0)
     {
-        $this->output = $output;
-        $this->returnValue = $returnValue;
+        $this->output = (string) $output;
+        $this->returnValue = (string) $returnValue;
         $this->stopWatch = new Stopwatch();
         $this->randomName = uniqid('stop_w');
-        $this->duration = $duration;
-        $this->startAt = $startAt;
-        $this->memory = $memory;
+        $this->duration = (int) $duration;
+        $this->startAt = (int) $startAt;
+        $this->memory = (int) $memory;
     }
 
     /**
@@ -79,7 +79,7 @@ class ClosureReturnValue
     public function stop($returnValue = null)
     {
         $this->output = ob_get_clean();
-        $this->returnValue = $returnValue;
+        $this->returnValue = (string) $returnValue;
         $event = $this->stopWatch->stop($this->randomName);
         $this->duration = $event->getDuration();
         $this->memory = $event->getMemory();

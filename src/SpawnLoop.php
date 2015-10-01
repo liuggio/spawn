@@ -49,7 +49,7 @@ class SpawnLoop
     public function start(callable $callable = null)
     {
         $this->assertLoopNotStarted();
-        if (null != $callable) {
+        if (null !== $callable) {
             $this->onCompleted($callable);
         }
         $this->loopRunning = true;
@@ -120,7 +120,8 @@ class SpawnLoop
     {
         $this->assertLoopNotStarted();
 
-        $this->eventDispatcher->addListener(EventsName::QUEUE_IS_EMPTY,
+        $this->eventDispatcher->addListener(
+            EventsName::QUEUE_IS_EMPTY,
             function (EmptiedQueueEvent $event) use ($callable) {
                 $callable();
             }
@@ -141,7 +142,8 @@ class SpawnLoop
     public function onLoopCompleted(callable $callable)
     {
         $this->assertLoopNotStarted();
-        $this->eventDispatcher->addListener(EventsName::LOOP_COMPLETED,
+        $this->eventDispatcher->addListener(
+            EventsName::LOOP_COMPLETED,
             function (LoopCompletedEvent $event) use ($callable) {
                 $callable($event->getExitCode(), $event->getStopwatchEvent());
             }
@@ -162,7 +164,8 @@ class SpawnLoop
     public function onPartialOutput(callable $callable)
     {
         $this->assertLoopNotStarted();
-        $this->eventDispatcher->addListener(EventsName::PROCESS_GENERATED_BUFFER,
+        $this->eventDispatcher->addListener(
+            EventsName::PROCESS_GENERATED_BUFFER,
             function (ProcessGeneratedBufferEvent $event) use ($callable) {
                 $callable($event->getProcess());
             }
@@ -188,7 +191,8 @@ class SpawnLoop
     private function addListener(callable $callable, $eventName)
     {
         $this->assertLoopNotStarted();
-        $this->eventDispatcher->addListener($eventName,
+        $this->eventDispatcher->addListener(
+            $eventName,
             function (ProcessCompletedEvent $event) use ($callable) {
                     $callable($event->getProcess());
             }

@@ -145,8 +145,6 @@ class Spawn
     {
         if (!($data instanceof EventDispatcherQueue)) {
             $data = new EventDispatcherQueue($this->eventDispatcher, $data);
-
-            return $data;
         }
 
         return $data;

@@ -37,7 +37,7 @@ class ProcessEnvironment
     {
         $this->channel = $channel;
         $this->arguments = $arguments;
-        $this->incrementNumber = $incrementNumber;
+        $this->incrementNumber = (int) $incrementNumber;
     }
 
     /**
