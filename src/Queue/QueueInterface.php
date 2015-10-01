@@ -7,9 +7,7 @@ interface QueueInterface
     /**
      * Adds an element to the queue.
      *
-     * @param mixed $value <p>
-     *                     The value to enqueue.
-     *                     </p>
+     * @param mixed $value The value to enqueue.
      */
     public function enqueue($value);
 

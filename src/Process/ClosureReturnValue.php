@@ -6,14 +6,48 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class ClosureReturnValue
 {
+    /**
+     * @var string
+     */
     private $output;
+
+    /**
+     * @var string
+     */
     private $returnValue;
+
+    /**
+     * @var Stopwatch
+     */
     private $stopWatch;
+
+    /**
+     * @var int
+     */
     private $duration;
+
+    /**
+     * @var int
+     */
     private $startAt;
+
+    /**
+     * @var int
+     */
     private $memory;
+
+    /**
+     * @var string
+     */
     private $randomName;
 
+    /**
+     * @param string $output
+     * @param string $returnValue
+     * @param int    $startAt
+     * @param int    $duration
+     * @param int    $memory
+     */
     public function __construct($output = '', $returnValue = '', $startAt = 0, $duration = 0, $memory = 0)
     {
         $this->output = $output;
@@ -25,6 +59,9 @@ class ClosureReturnValue
         $this->memory = $memory;
     }
 
+    /**
+     * @return ClosureReturnValue
+     */
     public static function start()
     {
         $obj = new self();
@@ -34,6 +71,11 @@ class ClosureReturnValue
         return $obj;
     }
 
+    /**
+     * @param string|null $returnValue
+     *
+     * @return string
+     */
     public function stop($returnValue = null)
     {
         $this->output = ob_get_clean();
@@ -46,6 +88,9 @@ class ClosureReturnValue
         return $this->serialize();
     }
 
+    /**
+     * @return string
+     */
     private function serialize()
     {
         return base64_encode(serialize([$this->output, $this->returnValue, $this->startAt, $this->duration, $this->memory]));

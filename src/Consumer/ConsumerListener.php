@@ -11,27 +11,51 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ConsumerListener
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     private $processCounter = 0;
-    /** @var QueueInterface */
+
+    /**
+     * @var QueueInterface
+     */
     private $queue;
-    /** @var EventDispatcherInterface */
+
+    /**
+     * @var EventDispatcherInterface
+     */
     private $eventDispatcher;
-    /** @var ProcessFactoryInterface */
+
+    /**
+     * @var ProcessFactoryInterface
+     */
     private $processFactory;
-    /** @var string */
+
+    /**
+     * @var string|null
+     */
     private $cwd;
-    /** @var string */
+
+    /**
+     * @var string|null
+     */
     private $template;
 
+    /**
+     * @param QueueInterface           $queue
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param ProcessFactoryInterface  $processFactory
+     * @param string|null              $template
+     * @param string|null              $cwd
+     */
     public function __construct(
         QueueInterface $queue,
         EventDispatcherInterface $eventDispatcher,
         ProcessFactoryInterface $processFactory,
         $template = null,
-        $cwd = null)
-    {
         $this->processCounter = 0;
+        $cwd = null
+    ) {
         $this->queue = $queue;
         $this->eventDispatcher = $eventDispatcher;
         $this->processFactory = $processFactory;
@@ -39,6 +63,9 @@ class ConsumerListener
         $this->template = $template;
     }
 
+    /**
+     * @param ChannelIsWaitingEvent $event
+     */
     public function onChannelIsWaiting(ChannelIsWaitingEvent $event)
     {
         $channel = $event->getChannel();

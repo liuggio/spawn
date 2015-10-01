@@ -12,7 +12,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class EventDispatcherQueue extends SplQueue implements QueueInterface
 {
-    /** @var  EventDispatcherInterface */
+    /**
+     * @var EventDispatcherInterface
+     */
     private $eventDispatcher;
 
     /**

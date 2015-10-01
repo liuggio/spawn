@@ -8,9 +8,17 @@ use Symfony\Component\Process\PhpProcess;
 
 class ClosureProcess extends PhpProcess
 {
-    /** @var ProcessEnvironment */
+    /**
+     * @var ProcessEnvironment
+     */
     private $processEnvironment;
 
+    /**
+     * @param CommandLine        $script
+     * @param ProcessEnvironment $processEnvironment
+     * @param int|float|null     $timeout
+     * @param string|null        $cwd
+     */
     public function __construct(
         CommandLine $script,
         ProcessEnvironment $processEnvironment,
@@ -45,11 +53,11 @@ class ClosureProcess extends PhpProcess
      *
      * @param callable|null $callback A valid PHP callback
      *
-     * @return int The returnValue of the Closure
-     *
      * @throws RuntimeException When process timed out
      * @throws RuntimeException When process stopped after receiving signal
      * @throws LogicException   When process is not yet started
+     *
+     * @return int The returnValue of the Closure
      */
     public function wait($callback = null)
     {

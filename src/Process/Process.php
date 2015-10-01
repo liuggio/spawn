@@ -7,9 +7,17 @@ use Symfony\Component\Process\Process as BaseProcess;
 
 class Process extends BaseProcess
 {
-    /** @var ProcessEnvironment */
+    /**
+     * @var ProcessEnvironment
+     */
     private $processEnvironment;
 
+    /**
+     * @param CommandLine        $commandLine
+     * @param ProcessEnvironment $processEnvironment
+     * @param int|float|null     $timeout
+     * @param string|null        $cwd
+     */
     public function __construct(
         CommandLine $commandLine,
         ProcessEnvironment $processEnvironment,
@@ -21,7 +29,7 @@ class Process extends BaseProcess
         parent::__construct((string) $commandLine, $cwd, $this->processEnvironment->exportToEnvsArray());
         if ($timeout) {
             $this->setTimeout($timeout);
-           // compatibility to SF 2.2
+            // compatibility to SF 2.2
             if (method_exists($this, 'setIdleTimeout')) {
                 $this->setIdleTimeout($timeout);
             }

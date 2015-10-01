@@ -6,13 +6,15 @@ use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractInputLineEvent extends Event
 {
-    /** @var mixed */
+    /**
+     * @var mixed
+     */
     private $inputLine;
 
     /**
      * NewCommandLoadedEvent constructor.
      *
-     * @param $command
+     * @param mixed $command
      */
     public function __construct($command)
     {

@@ -6,7 +6,9 @@ use Liuggio\Spawn\Exception\TheQueueMustNotBeFrozenToEnqueueException;
 
 class SplQueue extends \SplQueue implements QueueInterface
 {
-    /** @var  bool */
+    /**
+     * @var bool
+     */
     private $isFrozen = false;
 
     /**
@@ -77,6 +79,9 @@ class SplQueue extends \SplQueue implements QueueInterface
         $this->isFrozen = true;
     }
 
+    /**
+     * @throws TheQueueMustNotBeFrozenToEnqueueException
+     */
     private function assertIsNotFrozen()
     {
         if ($this->isFrozen()) {

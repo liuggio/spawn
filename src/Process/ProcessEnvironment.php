@@ -13,11 +13,19 @@ class ProcessEnvironment
     const ENV_TEST_INCREMENTAL_NUMBER = 'ENV_TEST_INC_NUMBER';
     const ENV_TEST_IS_FIRST_ON_CHANNEL = 'ENV_TEST_IS_FIRST_ON_CHANNEL';
 
-    /** @var Channel */
+    /**
+     * @var Channel
+     */
     private $channel;
-    /** @var mixed */
+
+    /**
+     * @var mixed
+     */
     private $arguments;
-    /** @var int */
+
+    /**
+     * @var int
+     */
     private $incrementNumber;
 
     /**
@@ -32,6 +40,9 @@ class ProcessEnvironment
         $this->incrementNumber = $incrementNumber;
     }
 
+    /**
+     * @return array
+     */
     public function exportToEnvsArray()
     {
         return [

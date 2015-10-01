@@ -7,18 +7,26 @@ use Liuggio\Spawn\Queue\QueueInterface;
 
 class StdInProducer implements ProducerInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $stdIn;
-    /** @var resource|null */
+
+    /**
+     * @var resource|null
+     */
     private $resource = null;
 
+    /**
+     * @param string $stdIn
+     */
     public function __construct($stdIn = 'php://stdin')
     {
-        $this->stdIn = $stdIn;
+        $this->stdIn = (string) $stdIn;
     }
 
     /**
-     * {@inheritdoc}
+     * @param QueueInterface $queue
      */
     public function produce(QueueInterface $queue)
     {
@@ -38,6 +46,10 @@ class StdInProducer implements ProducerInterface
         }
     }
 
+    /**
+     * @param QueueInterface $queue
+     * @param string         $line
+     */
     private function addLineIfNotEmpty(QueueInterface $queue, $line)
     {
         $line = trim($line);
@@ -46,6 +58,9 @@ class StdInProducer implements ProducerInterface
         }
     }
 
+    /**
+     * @throws StdInMustBeAValidResourceException
+     */
     private function assertResourceIsValid()
     {
         if (!$this->resource) {

@@ -20,23 +20,52 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class Processes implements EventSubscriberInterface
 {
-    /** @var EventDispatcherInterface */
+    /**
+     * @var EventDispatcherInterface
+     */
     private $eventDispatcher;
-    /** @var int|float */
+
+    /**
+     * @var int|float
+     */
     private $pollingTime;
-    /** @var int|float|null */
+
+    /**
+     * @var int|float|null
+     */
     private $parallelChannels;
-    /** @var Callable */
+
+    /**
+     * @var Callable
+     */
     private $exitCodeStrategy;
-    /** @var Channels */
+
+    /**
+     * @var Channels
+     */
     private $channels;
-    /** @var bool */
+
+    /**
+     * @var bool
+     */
     private $queueIsEmpty = false;
-    /** @var bool */
+
+    /**
+     * @var bool
+     */
     private $queueIsFrozen = false;
-    /** @var int */
+
+    /**
+     * @var int
+     */
     private $exitCode = 0;
 
+    /**
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param int                      $pollingTime
+     * @param int                      $forceToUseNChannels
+     * @param int|null                 $exitCodeStrategy
+     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         $pollingTime = null,
@@ -50,6 +79,9 @@ class Processes implements EventSubscriberInterface
         $this->channels = Channels::createWaiting($this->parallelChannels);
     }
 
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -60,22 +92,34 @@ class Processes implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param FrozenQueueEvent $event
+     */
     public function onFrozenQueue(FrozenQueueEvent $event)
     {
         $this->queueIsFrozen = true;
     }
 
+    /**
+     * @param EmptiedQueueEvent $event
+     */
     public function onQueueEmptied(EmptiedQueueEvent $event)
     {
         $this->queueIsEmpty = true;
     }
 
+    /**
+     * @param ProcessStartedEvent $event
+     */
     public function onProcessStarted(ProcessStartedEvent $event)
     {
         $channel = $event->getProcess()->getChannel();
         $this->channels->assignAProcess($channel, $event->getProcess());
     }
 
+    /**
+     * @param ProcessCompletedEvent $event
+     */
     public function onProcessCompleted(ProcessCompletedEvent $event)
     {
         $channel = $event->getProcess()->getChannel();
@@ -87,6 +131,9 @@ class Processes implements EventSubscriberInterface
         $this->eventDispatcher->dispatch(EventsName::CHANNEL_IS_WAITING, new ChannelIsWaitingEvent($channel));
     }
 
+    /**
+     * @return int
+     */
     public function loop()
     {
         $stopWatch = new Stopwatch();
@@ -103,6 +150,9 @@ class Processes implements EventSubscriberInterface
         return $this->exitCode;
     }
 
+    /**
+     * @param Channel[] $waitingChannels
+     */
     private function notifyWaitingChannel($waitingChannels)
     {
         foreach ($waitingChannels as $channel) {
@@ -113,6 +163,9 @@ class Processes implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @param Channel[] $assignedChannels
+     */
     private function checkTerminatedProcessOnChannels($assignedChannels)
     {
         foreach ($assignedChannels as $channel) {
@@ -134,6 +187,11 @@ class Processes implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @param int $forceToUseNChannels
+     * 
+     * @return int
+     */
     private function calculateChannels($forceToUseNChannels = 0)
     {
         if ((int) $forceToUseNChannels > 0) {
@@ -144,6 +202,11 @@ class Processes implements EventSubscriberInterface
         return $processorCounter->execute();
     }
 
+    /**
+     * @param callable|null $exitStrategyCallable
+     * 
+     * @return callable|int
+     */
     private function createExitStrategyCallable(callable $exitStrategyCallable = null)
     {
         if (null != $exitStrategyCallable) {

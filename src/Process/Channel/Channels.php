@@ -6,9 +6,14 @@ use Liuggio\Spawn\Process\Process;
 
 class Channels
 {
-    /** @var array */
-    private $channels;
+    /**
+     * @var array
+     */
+    private $channels = [];
 
+    /**
+     * @param int $channelsNumber
+     */
     private function __construct($channelsNumber)
     {
         for ($i = 0; $i < $channelsNumber; ++$i) {
@@ -20,7 +25,7 @@ class Channels
     /**
      * Creates a bunch of waiting channels.
      *
-     * @param $channelsNumber
+     * @param int $channelsNumber
      *
      * @return Channels
      */
@@ -35,7 +40,7 @@ class Channels
      * @param Channel $channel
      * @param Process $process
      */
-    public function assignAProcess(Channel $channel, $process)
+    public function assignAProcess(Channel $channel, Process $process)
     {
         $this->channels[$channel->getId()] = $channel->assignToAProcess($process);
     }

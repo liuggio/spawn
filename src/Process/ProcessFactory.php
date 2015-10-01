@@ -7,17 +7,35 @@ use Liuggio\Spawn\Process\Channel\Channel;
 
 class ProcessFactory implements ProcessFactoryInterface
 {
-    /** @var Callable */
+    /**
+     * @var Callable
+     */
     private $templateEngine;
-    /** @var int|float|null */
+
+    /**
+     * @var int|float|null
+     */
     private $timeout;
 
+    /**
+     * @param callable|null  $templateEngine
+     * @param int|float|null $timeout
+     */
     public function __construct(callable $templateEngine = null, $timeout = null)
     {
         $this->templateEngine = $templateEngine ?: $this->createDefaultTemplateEngine();
         $this->timeout = $timeout;
     }
 
+    /**
+     * @param Channel     $channel
+     * @param mixed       $inputLine
+     * @param int|null    $processCounter
+     * @param string|null $template
+     * @param string|null $cwd
+     *
+     * @return Process
+     */
     public function create(Channel $channel, $inputLine, $processCounter, $template = null, $cwd = null)
     {
         $environment = new ProcessEnvironment($channel, $inputLine, $processCounter);
@@ -30,6 +48,9 @@ class ProcessFactory implements ProcessFactoryInterface
         return $this->createProcess($commandLine, $environment, $cwd);
     }
 
+    /**
+     * @return callable
+     */
     protected function createDefaultTemplateEngine()
     {
         return function (ProcessEnvironment $processEnvironment, $template) {
@@ -41,6 +62,13 @@ class ProcessFactory implements ProcessFactoryInterface
         };
     }
 
+    /**
+     * @param CommandLine        $commandLine
+     * @param ProcessEnvironment $environment
+     * @param string             $cwd
+     *
+     * @return Process
+     */
     protected function createProcess(CommandLine $commandLine, ProcessEnvironment $environment, $cwd = null)
     {
         return new Process($commandLine, $environment, $this->timeout, $cwd);

@@ -16,12 +16,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Spawn
 {
-    /** @var EventDispatcherInterface */
+    /**
+     * @var EventDispatcherInterface
+     */
     private $eventDispatcher;
 
     /**
-     * Spawn constructor.
-     *
      * @param EventDispatcherInterface|null $eventDispatcher
      * @param null|string                   $autoloadFile
      */
@@ -40,7 +40,6 @@ class Spawn
      * @param int|null                       $forceToNChannels
      *
      * @return SpawnLoop
-     *                   *
      *
      * @api
      */
@@ -105,6 +104,12 @@ class Spawn
         return $process;
     }
 
+    /**
+     * @param int|null $pollingTime
+     * @param int|null $forceToNChannels
+     *
+     * @return Processes
+     */
     private function initProcesses($pollingTime, $forceToNChannels)
     {
         $processes = new Processes($this->eventDispatcher, $pollingTime, $forceToNChannels);
@@ -113,6 +118,9 @@ class Spawn
         return $processes;
     }
 
+    /**
+     * @param mixed $consumer
+     */
     private function addConsumerToListener($consumer)
     {
         $this->eventDispatcher->addListener(
@@ -121,6 +129,9 @@ class Spawn
         );
     }
 
+    /**
+     * @return void|string
+     */
     private function findAutoloadFilename()
     {
         foreach ([__DIR__.'/../../autoload.php', __DIR__.'/../vendor/autoload.php', __DIR__.'/vendor/autoload.php'] as $file) {

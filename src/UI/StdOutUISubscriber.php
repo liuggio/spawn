@@ -9,6 +9,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class StdOutUISubscriber implements EventSubscriberInterface
 {
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -23,10 +26,21 @@ class StdOutUISubscriber implements EventSubscriberInterface
     }
 
     public function __call($name, $arguments)
+    /**
+     * @param string $name
+     * @param array  $arguments
+     * 
+     * @return string
+     */
     {
         echo ' - called:'.$name.PHP_EOL;
     }
 
+    /**
+     * @param ProcessCompletedEvent $event
+     * 
+     * @return string
+     */
     public function onProcessCompleted(ProcessCompletedEvent $event)
     {
         echo sprintf("%s] onProcessCompleted: [%s] on [%s] with %s\n",
@@ -38,6 +52,11 @@ class StdOutUISubscriber implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @param ProcessGeneratedBufferEvent $event
+     * 
+     * @return string
+     */
     public function onGeneratedBuffer(ProcessGeneratedBufferEvent $event)
     {
         $err = trim($event->getProcess()->getIncrementalErrorOutput());

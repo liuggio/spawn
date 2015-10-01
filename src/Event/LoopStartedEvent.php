@@ -6,7 +6,9 @@ use Symfony\Component\EventDispatcher\Event;
 
 class LoopStartedEvent extends Event
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     private $channelsNumber;
 
     /**

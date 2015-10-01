@@ -14,11 +14,19 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SpawnLoop
 {
-    /** @var EventDispatcherInterface */
+    /**
+     * @var EventDispatcherInterface
+     */
     private $eventDispatcher;
-    /** @var Processes */
+
+    /**
+     * @var Processes
+     */
     private $processes;
-    /** @var bool */
+
+    /**
+     * @var bool
+     */
     private $loopRunning = false;
 
     public function __construct(Processes $processes, EventDispatcherInterface $eventDispatcher = null)
@@ -32,7 +40,7 @@ class SpawnLoop
      *
      * @param callable|null $callable
      *
-     * @return $this
+     * @return self
      *
      * @throws LoopAlreadyStartedException
      *
@@ -56,7 +64,7 @@ class SpawnLoop
      *
      * @param callable $callable
      *
-     * @return $this
+     * @return self
      *
      * @api
      */
@@ -72,7 +80,7 @@ class SpawnLoop
      *
      * @param callable $callable
      *
-     * @return $this
+     * @return self
      *
      * @api
      */
@@ -88,7 +96,7 @@ class SpawnLoop
      *
      * @param callable $callable
      *
-     * @return $this
+     * @return self
      *
      * @api
      */
@@ -104,7 +112,7 @@ class SpawnLoop
      *
      * @param callable $callable
      *
-     * @return $this
+     * @return self
      *
      * @api
      */
@@ -126,7 +134,7 @@ class SpawnLoop
      *
      * @param callable $callable
      *
-     * @return $this
+     * @return self
      *
      * @api
      */
@@ -147,7 +155,7 @@ class SpawnLoop
      *
      * @param callable $callable
      *
-     * @return $this
+     * @return self
      *
      * @api
      */
@@ -163,6 +171,9 @@ class SpawnLoop
         return $this;
     }
 
+    /**
+     * @throws LoopAlreadyStartedException
+     */
     private function assertLoopNotStarted()
     {
         if ($this->loopRunning) {
@@ -170,6 +181,10 @@ class SpawnLoop
         }
     }
 
+    /**
+     * @param callable $callable
+     * @param string   $eventName
+     */
     private function addListener(callable $callable, $eventName)
     {
         $this->assertLoopNotStarted();

@@ -9,7 +9,9 @@ class CommandLine
 {
     const DEFAULT_COMMAND_TO_EXECUTE_TPL = 'bin/phpunit {}';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $commandValue;
 
     /**
@@ -25,13 +27,13 @@ class CommandLine
     /**
      * Creates a new CommandLine given a line string.
      *
-     * @param $string
+     * @param string $commandValue
      *
      * @return static
      */
-    public static function fromString($string)
+    public static function fromString($commandValue)
     {
-        return new self($string);
+        return new self($commandValue);
     }
 
     /**

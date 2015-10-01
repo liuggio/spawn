@@ -7,7 +7,9 @@ use Symfony\Component\EventDispatcher\Event;
 
 class ChannelIsWaitingEvent extends Event
 {
-    /** @var  Channel */
+    /**
+     * @var Channel
+     */
     private $channel;
 
     /**
