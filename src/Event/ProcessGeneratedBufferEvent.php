@@ -2,27 +2,26 @@
 
 namespace Liuggio\Spawn\Event;
 
-use Liuggio\Spawn\Process\ClosureProcess;
-use Liuggio\Spawn\Process\Process;
+use Liuggio\Spawn\Process\ProcessInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 final class ProcessGeneratedBufferEvent extends Event
 {
     /**
-     * @var Process|ClosureProcess
+     * @var ProcessInterface
      */
     private $process;
 
     /**
-     * @param Process|ClosureProcess $process
+     * @param ProcessInterface $process
      */
-    public function __construct($process)
+    public function __construct(ProcessInterface $process)
     {
         $this->process = $process;
     }
 
     /**
-     * @return Process|ClosureProcess
+     * @return ProcessInterface
      */
     public function getProcess()
     {

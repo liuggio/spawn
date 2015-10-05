@@ -5,7 +5,7 @@ namespace Liuggio\Spawn\Process;
 use Liuggio\Spawn\CommandLine;
 use Symfony\Component\Process\Process as BaseProcess;
 
-class Process extends BaseProcess
+class Process extends BaseProcess implements ProcessInterface
 {
     /**
      * @var ProcessEnvironment
@@ -52,11 +52,21 @@ class Process extends BaseProcess
         return new CommandLine(parent::getCommandLine());
     }
 
+    /**
+     * The current Id of the processes.
+     *
+     * @return int
+     */
     public function getIncrementalNumber()
     {
         return $this->processEnvironment->getIncrementalNumber();
     }
 
+    /**
+     * The channel where the process is executed.
+     *
+     * @return Channel
+     */
     public function getChannel()
     {
         return $this->processEnvironment->getChannel();

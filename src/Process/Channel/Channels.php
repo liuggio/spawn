@@ -2,7 +2,7 @@
 
 namespace Liuggio\Spawn\Process\Channel;
 
-use Liuggio\Spawn\Process\Process;
+use Liuggio\Spawn\Process\ProcessInterface;
 
 class Channels
 {
@@ -38,10 +38,10 @@ class Channels
     /**
      * Assign a channel to a processes.
      *
-     * @param Channel $channel
-     * @param Process $process
+     * @param Channel          $channel
+     * @param ProcessInterface $process
      */
-    public function assignAProcess(Channel $channel, Process $process)
+    public function assignAProcess(Channel $channel, ProcessInterface $process)
     {
         $this->channels[$channel->getId()] = $channel->assignToAProcess($process);
     }

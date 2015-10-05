@@ -2,27 +2,26 @@
 
 namespace Liuggio\Spawn\Event;
 
-use Liuggio\Spawn\Process\ClosureProcess;
-use Liuggio\Spawn\Process\Process;
+use Liuggio\Spawn\Process\ProcessInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractProcessEvent extends Event
 {
     /**
-     * @var ClosureProcess|Process
+     * @var ProcessInterface
      */
     protected $process;
 
     /**
-     * @param ClosureProcess|Process $process
+     * @param ProcessInterface $process
      */
-    public function __construct($process)
+    public function __construct(ProcessInterface $process)
     {
         $this->process = $process;
     }
 
     /**
-     * @return ClosureProcess|Process
+     * @return ProcessInterface
      */
     public function getProcess()
     {

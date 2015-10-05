@@ -6,7 +6,7 @@ use Liuggio\Spawn\CommandLine;
 use Liuggio\Spawn\Process\Channel\Channel;
 use Symfony\Component\Process\PhpProcess;
 
-class ClosureProcess extends PhpProcess
+class ClosureProcess extends PhpProcess implements ProcessInterface
 {
     /**
      * @var ProcessEnvironment
@@ -85,7 +85,7 @@ class ClosureProcess extends PhpProcess
     }
 
     /**
-     * The channel where the processes is executed.
+     * The channel where the process is executed.
      *
      * @return Channel
      */
