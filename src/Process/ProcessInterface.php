@@ -7,19 +7,6 @@ use Liuggio\Spawn\CommandLine;
 interface ProcessInterface
 {
     /**
-     * @param CommandLine        $commandLine
-     * @param ProcessEnvironment $processEnvironment
-     * @param int|float|null     $timeout
-     * @param string|null        $cwd
-     */
-    public function __construct(
-        CommandLine $commandLine,
-        ProcessEnvironment $processEnvironment,
-        $timeout = null,
-        $cwd = null
-    );
-
-    /**
      * @return mixed
      */
     public function getInputLine();
