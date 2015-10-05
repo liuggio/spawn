@@ -12,7 +12,7 @@ class ClosureReturnValue
     private $output;
 
     /**
-     * @var string
+     * @var mixed
      */
     private $returnValue;
 
@@ -43,7 +43,7 @@ class ClosureReturnValue
 
     /**
      * @param string $output
-     * @param string $returnValue
+     * @param mixed  $returnValue
      * @param int    $startAt
      * @param int    $duration
      * @param int    $memory
@@ -51,7 +51,7 @@ class ClosureReturnValue
     public function __construct($output = '', $returnValue = '', $startAt = 0, $duration = 0, $memory = 0)
     {
         $this->output = (string) $output;
-        $this->returnValue = (string) $returnValue;
+        $this->returnValue = $returnValue;
         $this->stopWatch = new Stopwatch();
         $this->randomName = uniqid('stop_w');
         $this->duration = (int) $duration;
@@ -79,7 +79,7 @@ class ClosureReturnValue
     public function stop($returnValue = null)
     {
         $this->output = ob_get_clean();
-        $this->returnValue = (string) $returnValue;
+        $this->returnValue = $returnValue;
         $event = $this->stopWatch->stop($this->randomName);
         $this->duration = $event->getDuration();
         $this->memory = $event->getMemory();
