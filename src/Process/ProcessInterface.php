@@ -367,13 +367,6 @@ interface ProcessInterface
     public function addErrorOutput($line);
 
     /**
-     * Gets the command line to be executed.
-     *
-     * @return string The command to execute
-     */
-    public function getCommandLine();
-
-    /**
      * Sets the command line to be executed.
      *
      * @param string $commandline The command to execute
@@ -587,105 +580,4 @@ interface ProcessInterface
      * @return bool
      */
     public static function isPtySupported();
-
-    /**
-     * Creates the descriptors needed by the proc_open.
-     *
-     * @return array
-     */
-    private function getDescriptors();
-
-    /**
-     * Builds up the callback used by wait().
-     *
-     * The callbacks adds all occurred output to the specific buffer and calls
-     * the user callback (if present) with the received output.
-     *
-     * @param callable|null $callback The user defined PHP callback
-     *
-     * @return callable A PHP callable
-     */
-    protected function buildCallback($callback);
-
-    /**
-     * Updates the status of the process, reads pipes.
-     *
-     * @param bool $blocking Whether to use a blocking read call.
-     */
-    protected function updateStatus($blocking);
-
-    /**
-     * Returns whether PHP has been compiled with the '--enable-sigchild' option or not.
-     *
-     * @return bool
-     */
-    protected function isSigchildEnabled();
-
-    /**
-     * Validates and returns the filtered timeout.
-     *
-     * @param int|float|null $timeout
-     *
-     * @return float|null
-     *
-     * @throws InvalidArgumentException if the given timeout is a negative number
-     */
-    private function validateTimeout($timeout);
-
-    /**
-     * Reads pipes, executes callback.
-     *
-     * @param bool $blocking Whether to use blocking calls or not.
-     * @param bool $close    Whether to close file handles or not.
-     */
-    private function readPipes($blocking, $close);
-
-    /**
-     * Captures the exitcode if mentioned in the process information.
-     */
-    private function captureExitCode();
-
-    /**
-     * Closes process resource, closes file handles, sets the exitcode.
-     *
-     * @return int The exitcode
-     */
-    private function close();
-
-    /**
-     * Resets data related to the latest run of the process.
-     */
-    private function resetProcessData();
-
-    /**
-     * Sends a POSIX signal to the process.
-     *
-     * @param int  $signal         A valid POSIX signal (see http://www.php.net/manual/en/pcntl.constants.php)
-     * @param bool $throwException Whether to throw exception in case signal failed
-     *
-     * @return bool True if the signal was sent successfully, false otherwise
-     *
-     * @throws LogicException   In case the process is not running
-     * @throws RuntimeException In case --enable-sigchild is activated
-     * @throws RuntimeException In case of failure
-     */
-    private function doSignal($signal, $throwException);
-
-    /**
-     * Ensures the process is running or terminated, throws a LogicException if the process has a not started.
-     *
-     * @param string $functionName The function name that was called.
-     *
-     * @throws LogicException If the process has not run.
-     */
-    private function requireProcessIsStarted($functionName);
-
-    /**
-     * Ensures the process is terminated, throws a LogicException if the process has a status different than `terminated`.
-     *
-     * @param string $functionName The function name that was called.
-     *
-     * @throws LogicException If the process is not yet terminated.
-     */
-    private function requireProcessIsTerminated($functionName);
 }
