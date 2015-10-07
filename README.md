@@ -1,7 +1,7 @@
 Concurrent handing of PHP processes (and also closures)
 ========================================================
 
-![Build Status](https://travis-ci.org/liuggio/spawn.svg)
+[![Build Status](https://travis-ci.org/liuggio/spawn.svg)](https://travis-ci.org/liuggio/spawn)
 
 The main job of Spawn is to improve the performance handling concurrent processes.
 
