@@ -18,8 +18,8 @@ before_script:
 
 install:
   - composer install --prefer-source
-  - composer require --dev squizlabs/php_codesniffer
+  - composer --dev require fabpot/php-cs-fixer
 
 script:
-  - vendor/bin/phpcs --standard=psr2 src/
   - php tests/spawn_tests.php
+  - vendor/fabpot/php-cs-fixer/php-cs-fixer fix --level=symfony --dry-run --diff src

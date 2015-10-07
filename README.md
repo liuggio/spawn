@@ -1,6 +1,8 @@
 Concurrent handling of processes in PHP (and also closures)
 ===========================================================
 
+![Build Status](https://travis-ci.org/liuggio/spawn.svg)
+
 The main job is to handle concurrent processes using the Symfony Process component,
 in order to improve the performance when you have to execute a bunch of commands
 (like unit-tests/functional-tests/CS fixes/files handling) in your 'dev' environment.
