@@ -2,6 +2,7 @@
 
 namespace Liuggio\Spawn\Process;
 
+use Liuggio\Spawn\Exception\InvalidArgumentException;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class ClosureReturnValue
@@ -104,8 +105,9 @@ class ClosureReturnValue
     public static function unserialize($serialized)
     {
         $value = unserialize(base64_decode($serialized));
-        if (!$value || !is_array($value)) {
-            $value = [null, null];
+
+        if (!is_array($value) || count(array_intersect_key(array_fill(0, 5, null), $value)) < 5) {
+            throw new InvalidArgumentException();
         }
 
         return new self($value[0], $value[1], $value[2], $value[3], $value[4]);
