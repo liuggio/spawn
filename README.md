@@ -1,11 +1,13 @@
-Concurrent handling of processes in PHP (and also closures)
-===========================================================
+Concurrent handing of PHP processes (and also closures)
+========================================================
 
 ![Build Status](https://travis-ci.org/liuggio/spawn.svg)
 
-The main job is to handle concurrent processes using the Symfony Process component,
-in order to improve the performance when you have to execute a bunch of commands
-(like unit-tests/functional-tests/CS fixes/files handling) in your 'dev' environment.
+The main job of Spawn is to improve the performance handling concurrent processes.
+
+This library tries to do its best to speedup things using all the cores of the machine
+useful when you need to run bunch of commands
+eg:  unit-tests/functional-tests/CS fixes/files handling
 
 ``` php
 $spawn = new Spawn();
@@ -20,7 +22,7 @@ $spawn
 Yes! With this library you can use concurrent closures,
 **BUT** PHP is not `Go-lang` neither `Erlang` or any other famous language for concurrency,
 and in order to simulate a isolated routine the closure is serialized and executed in a new PhpProcess,
-be aware this is a workaround in order to speed up your 'dev' commands.
+be aware this is a workaround in order to speed up your concurrent Closures.
 
 With this library you can also do:
 
@@ -57,7 +59,8 @@ $processes = $spawn
         echo $prefix." heavy routine";
         return $number+$sum;
     });
-
+    
+// do something else here
 echo $processes->wait();      // 123
 echo $processes->getOutput(); // "super heavy routine"
 ```
