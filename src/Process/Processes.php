@@ -15,7 +15,6 @@ use Liuggio\Spawn\Process\Channel\Channels;
 use Liuggio\Spawn\ProcessorCounter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class Processes implements EventSubscriberInterface
