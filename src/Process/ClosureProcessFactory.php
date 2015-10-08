@@ -98,7 +98,7 @@ class ClosureProcessFactory implements ProcessFactoryInterface
      */
     private function createDefaultFromSerializedClosure($serializedClosure)
     {
-        $serializedClosure = base64_encode(serialize($serializedClosure));
+        $serializedClosure = base64_encode($serializedClosure);
         $autoload = $this->autoload;
 
         return function (ProcessEnvironment $envs, $template) use ($serializedClosure, $autoload) {
@@ -115,7 +115,7 @@ class ClosureProcessFactory implements ProcessFactoryInterface
 require_once \'%s\';
 $c = \Liuggio\Spawn\Process\ClosureReturnValue::start();
 $s = new \SuperClosure\Serializer();
-$fn = $s->unserialize(unserialize(base64_decode("%s")));
+$fn = $s->unserialize(base64_decode("%s"));
 $args = unserialize(base64_decode("%s"));
 echo $c->stop(%s($fn, $args));
 ', $autoload, $serializedClosure, $input, $function);
