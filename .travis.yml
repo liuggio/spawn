@@ -2,6 +2,10 @@ language: php
 
 sudo: false
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 php:
   - 5.4
   - 5.5
@@ -17,8 +21,8 @@ before_install:
   - composer self-update
 
 install:
-  - composer install --prefer-source
-  - composer --dev require fabpot/php-cs-fixer
+  - composer --dev require fabpot/php-cs-fixer --no-update
+  - composer install
 
 script:
   - php tests/spawn_tests.php
