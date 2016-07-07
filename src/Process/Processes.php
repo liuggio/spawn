@@ -36,7 +36,7 @@ class Processes implements EventSubscriberInterface
     private $parallelChannels;
 
     /**
-     * @var Callable
+     * @var callable
      */
     private $exitCodeStrategy;
 
