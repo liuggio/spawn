@@ -13,7 +13,7 @@ matrix:
   allow_failures:
     - php: hhvm
 
-before_script:
+before_install:
   - composer self-update
 
 install:
