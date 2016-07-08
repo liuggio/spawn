@@ -8,7 +8,7 @@ use Liuggio\Spawn\Process\Channel\Channel;
 class ProcessFactory implements ProcessFactoryInterface
 {
     /**
-     * @var Callable
+     * @var callable
      */
     private $templateEngine;
 

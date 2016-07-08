@@ -83,7 +83,7 @@ class Channel
      */
     public function isWaiting()
     {
-        return (null === $this->process);
+        return null === $this->process;
     }
 
     /**
@@ -94,7 +94,7 @@ class Channel
      */
     public function isPossibleToAssignABeforeCommand()
     {
-        return ($this->isWaiting() && $this->assignedProcessesCounter == 0);
+        return $this->isWaiting() && $this->assignedProcessesCounter == 0;
     }
 
     /**

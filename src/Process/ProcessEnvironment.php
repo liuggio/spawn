@@ -108,6 +108,6 @@ class ProcessEnvironment
      */
     public function isTheFirstCommandOnChannel()
     {
-        return ($this->channel->getAssignedProcessesCounter() == 1);
+        return $this->channel->getAssignedProcessesCounter() == 1;
     }
 }
