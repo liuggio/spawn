@@ -1,4 +1,4 @@
-Concurrent handing of PHP processes (and also closures)
+Concurrent handling of PHP processes (and also closures)
 ========================================================
 
 [![Build Status](https://travis-ci.org/liuggio/spawn.svg)](https://travis-ci.org/liuggio/spawn)
