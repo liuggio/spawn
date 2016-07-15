@@ -2,6 +2,10 @@ language: php
 
 sudo: false
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 php:
   - 5.4
   - 5.5
@@ -13,12 +17,12 @@ matrix:
   allow_failures:
     - php: hhvm
 
-before_script:
+before_install:
   - composer self-update
 
 install:
-  - composer install --prefer-source
-  - composer --dev require fabpot/php-cs-fixer
+  - composer --dev require fabpot/php-cs-fixer --no-update
+  - composer update
 
 script:
   - php tests/spawn_tests.php
